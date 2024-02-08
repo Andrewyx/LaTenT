@@ -1,5 +1,7 @@
 package model;
 
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+
 import java.util.ArrayList;
 
 /**

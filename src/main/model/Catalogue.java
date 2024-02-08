@@ -1,17 +1,17 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Main catalogue class containing entry manipulation and log functions, list of entries
  */
 public class Catalogue {
 
-    private ArrayList<Entry> catalogue;
+    private HashMap<String, Entry> catalogue;
 
     // EFFECTS: Creates new catalogue with no entries yet
     public Catalogue() {
-        this.catalogue = new ArrayList<Entry>();
+        this.catalogue = new HashMap<String, Entry>();
     }
 
     // REQUIRES: Entry does not exist already
