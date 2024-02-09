@@ -38,7 +38,7 @@ public class CatalogueTest {
     }
 
     @Test
-    public void testRemoveEntry() {
+    public void testRemoveEntryWithKey() {
         this.catalogue.addEntry(this.e1);
         this.catalogue.addEntry(this.e2);
         this.catalogue.addEntry(this.e3);
@@ -46,6 +46,18 @@ public class CatalogueTest {
         assertFalse(this.catalogue.hasEntry("\\left("));
         assertTrue(this.catalogue.hasEntry("\\right)"));
         this.catalogue.removeEntry(this.e2.getCommand());
+        assertFalse(this.catalogue.hasEntry("\\right)"));
+    }
+
+    @Test
+    public void testRemoveEntryWithEntry() {
+        this.catalogue.addEntry(this.e1);
+        this.catalogue.addEntry(this.e2);
+        this.catalogue.addEntry(this.e3);
+        this.catalogue.removeEntry(this.e1);
+        assertFalse(this.catalogue.hasEntry("\\left("));
+        assertTrue(this.catalogue.hasEntry("\\right)"));
+        this.catalogue.removeEntry(this.e2);
         assertFalse(this.catalogue.hasEntry("\\right)"));
     }
 

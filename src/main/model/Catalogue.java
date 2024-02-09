@@ -36,6 +36,14 @@ public class Catalogue {
         this.catalogue.remove(key);
     }
 
+    /**
+     * REQUIRES: Entry exists in catalogue
+     * MODIFIES: this
+     * EFFECTS: Removes entry from catalogue given an entry
+     */
+    public void removeEntry(Entry entry) {
+        this.catalogue.remove(entry.getCommand());
+    }
 
     /**
      * EFFECTS: Produces the given entry in the catalogue
