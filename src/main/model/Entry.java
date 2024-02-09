@@ -1,6 +1,7 @@
 package model;
 
 import me.xdrop.fuzzywuzzy.FuzzySearch;
+import org.scilab.forge.jlatexmath.AccentedAtom;
 
 import java.util.ArrayList;
 

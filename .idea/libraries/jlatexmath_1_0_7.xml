@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="jlatexmath-1.0.7">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/spec/jlatexmath-1.0.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spec/jlatexmath-font-cyrillic-1.0.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spec/jlatexmath-font-greek-1.0.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-1.0.7/jlatexmath-example-export/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-1.0.7/jlatexmath-example-giws/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-1.0.7/jlatexmath-fop/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-1.0.7/jlatexmath/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-1.0.7/jlatexmath/src/test/java" />
+    </SOURCES>
+  </library>
+</component>
