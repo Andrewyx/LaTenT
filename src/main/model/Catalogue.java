@@ -23,46 +23,38 @@ public class Catalogue {
      * MODIFIES: this
      * EFFECTS: Adds new entry to catalogue
      */
-    public void addEntry() {
-        //stub
+    public void addEntry(Entry entry) {
+        this.catalogue.put(entry.getCommand(), entry);
     }
 
     /**
      * REQUIRES: Entry exists in catalogue
      * MODIFIES: this
-     * EFFECTS: Removes entry from catalogue
+     * EFFECTS: Removes entry from catalogue given its key
      */
-    public void removeEntry() {
-        //stub
+    public void removeEntry(String key) {
+        this.catalogue.remove(key);
     }
 
-    /**
-     * REQUIRES: Entry exists in catalogue
-     * MODIFIES: this
-     * EFFECTS: Edits the given entry in the catalogue
-     */
-    public void editEntry() {
-        //stub
-    }
 
     /**
-     * EFFECTS: Produces the given entry in the catalogue, or null if none found
+     * EFFECTS: Produces the given entry in the catalogue
      */
-    public Entry getCatalogueEntry() {
-        return null;
+    public Entry getCatalogueEntry(String key) {
+        return this.catalogue.get(key);
     }
 
     /**
      * EFFECTS: returns true is entry is in the catalogue
      */
-    public boolean hasEntry() {
-        return false;
+    public boolean hasEntry(String key) {
+        return this.catalogue.containsKey(key);
     }
 
     /**
      * EFFECTS: produces the length of the catalogue
      */
     public int getCatalogueSize() {
-        return 0;
+        return this.catalogue.size();
     }
 }

@@ -27,7 +27,7 @@ public class EntryTest {
         this.e1.changeDescription("New Description");
         assertEquals("New Description", this.e1.getDescription());
         this.e2.changeDescription("Another Description");
-        assertEquals("Another Description", this.e1.getDescription());
+        assertEquals("Another Description", this.e2.getDescription());
     }
 
     @Test
@@ -35,7 +35,7 @@ public class EntryTest {
         this.e1.changeCommand("New Command");
         assertEquals("New Command", this.e1.getCommand());
         this.e2.changeCommand("Another Command");
-        assertEquals("Another Command", this.e1.getCommand());
+        assertEquals("Another Command", this.e2.getCommand());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class EntryTest {
         this.e1.changeTitle("New Title");
         assertEquals("New Title", this.e1.getTitle());
         this.e2.changeTitle("Another Title");
-        assertEquals("Another Title", this.e1.getTitle());
+        assertEquals("Another Title", this.e2.getTitle());
     }
 
     @Test

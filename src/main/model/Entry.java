@@ -25,7 +25,7 @@ public class Entry implements MutationTools {
      */
     @Override
     public void changeDescription(String description) {
-
+        this.description = description;
     }
 
     /**
@@ -35,7 +35,7 @@ public class Entry implements MutationTools {
      */
     @Override
     public void changeCommand(String command) {
-
+        this.command = command;
     }
 
     /**
@@ -45,18 +45,18 @@ public class Entry implements MutationTools {
      */
     @Override
     public void changeTitle(String title) {
-
+        this.title = title;
     }
 
     public String getDescription() {
-        return null;
+        return this.description;
     }
 
     public String getCommand() {
-        return null;
+        return this.command;
     }
 
     public String getTitle() {
-        return null;
+        return this.title;
     }
 }
