@@ -9,11 +9,11 @@ import java.util.Scanner;
  * Main app interface for the project. Responsible for running the app and subsequent processes
  */
 public class LaTenTApp {
+    private static final Scanner USER_INPUT = new Scanner(System.in);
+    private static Catalogue catalogue = new Catalogue();
     private boolean appState;
     private String userInputString;
-    protected Catalogue catalogue;
-    private Scanner userInput;
-    private EntryEditor editor;
+    private Widget activeWidget;
 
     /**
      * EFFECTS: Starts new instance of the app and runs it, with a new catalogue
@@ -21,8 +21,6 @@ public class LaTenTApp {
     public LaTenTApp() {
         this.appState = true;
         this.userInputString = null;
-        this.catalogue = new Catalogue();
-        this.userInput = new Scanner(System.in);
         this.runApp();
     }
 
@@ -32,25 +30,22 @@ public class LaTenTApp {
      */
     private void runApp() {
         String inputText = null;
-        System.out.println(
-                "\n"
-                        + "                               \n"
-                        + " __        _____         _____ \n"
-                        + "|  |   ___|_   _|___ ___|_   _|\n"
-                        + "|  |__| .'| | | | -_|   | | |  \n"
-                        + "|_____|__,| |_| |___|_|_| |_|  \n"
-                        + "                               \n"
-        );
+        System.out.println(Graphics.logo);
+        System.out.println("Welcome to LaTent");
         while (this.appState) {
-            System.out.println("Welcome to LaTent");
-            System.out.println("Enter your command");
-            inputText = this.userInput.next();
-            inputText.toString().toLowerCase();
+            System.out.println("Enter your command...");
+            inputText = USER_INPUT.next();
+            inputText = inputText.toLowerCase();
 
             if (inputText.equals("q")) {
                 this.appState = false;
             } else {
                 System.out.println("Running: " + inputText);
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 this.handleInput(inputText);
             }
         }
@@ -79,15 +74,11 @@ public class LaTenTApp {
 
     /**
      * MODIFIES: this
-     * EFFECTS: creates new entry to add to catalogue
+     * EFFECTS: opens entry creator menu
      */
     private void newEntry() {
         System.out.println("Opening Entry Creator");
-        this.editor = new EntryEditor();
-        Entry createdEntry = this.editor.runCreateEntry();
-        if (createdEntry != null) {
-            this.catalogue.addEntry(createdEntry);
-        }
+        this.activeWidget = new EntryCreator();
     }
 
     /**
@@ -95,14 +86,13 @@ public class LaTenTApp {
      */
     private void findEntry() {
         System.out.println("Give Entry Command");
-        userInputString = this.userInput.next();
-        if (this.catalogue.hasEntry(userInputString)) {
-            Entry activeEntry = this.catalogue.getCatalogueEntry(userInputString);
-            System.out.println(
-                    activeEntry.getTitle()
-                            + activeEntry.getCommand()
-                            + activeEntry.getDescription()
-            );
+        userInputString = USER_INPUT.next();
+        if (catalogue.hasEntry(userInputString)) {
+            Entry activeEntry = catalogue.getCatalogueEntry(userInputString);
+            System.out.println("Command Title: " + activeEntry.getTitle());
+            System.out.println("LaTeX Command: " + activeEntry.getCommand());
+            System.out.println("Description: " + activeEntry.getDescription());
+
         } else {
             System.out.println("Entry Not Found");
         }
@@ -110,15 +100,14 @@ public class LaTenTApp {
 
     /**
      * MODIFIES: this
-     * EFFECTS: Opens the given entry in the editor
+     * EFFECTS: Opens the given entry in the activeWidget
      */
     private void openEntry() {
         System.out.println("Give Entry Command to Open");
-        userInputString = this.userInput.next();
-        this.catalogue.getCatalogueEntry(userInputString);
-        this.editor = new EntryEditor();
-        this.editor.runEditor(
-                this.catalogue.getCatalogueEntry(userInputString)
+        userInputString = USER_INPUT.next();
+        catalogue.getCatalogueEntry(userInputString);
+        this.activeWidget = new EntryEditor(
+                catalogue.getCatalogueEntry(userInputString)
         );
     }
 }

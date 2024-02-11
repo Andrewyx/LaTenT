@@ -1,4 +1,4 @@
-package ui;
+package model;
 
 import org.scilab.forge.jlatexmath.TeXFormula;
 

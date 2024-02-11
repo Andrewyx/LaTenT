@@ -7,17 +7,23 @@ import java.util.Scanner;
 /**
  * Opens Editor interface for creating or modifying entries
  */
-public class EntryEditor {
-    private boolean editorState;
-    private Scanner userInput;
+public class EntryEditor extends Widget {
     private Entry activeEntry;
 
     /**
-     * EFFECTS: Creates new editor interface and runs it
+     * EFFECTS: Creates new widget interface for the editor
      */
-    public EntryEditor() {
-        this.editorState = true;
-        this.userInput = new Scanner(System.in);
+    public EntryEditor(Entry entry) {
+        super();
+        this.activeEntry = entry;
+    }
+
+    /**
+     * EFFECTS: Runs editor widget
+     */
+    @Override
+    public void runWidget() {
+
     }
 
     /**
@@ -31,9 +37,9 @@ public class EntryEditor {
     }
 
     /**
-     * EFFECTS: Deletes the current active entry
+     * EFFECTS: Deletes the provided entry from the catalogue
      */
-    private void deleteEntry() {
+    private void deleteEntry(Entry entry) {
         //stub
     }
 
