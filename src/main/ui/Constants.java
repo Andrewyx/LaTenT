@@ -12,4 +12,5 @@ public class Constants {
     public static final String EDIT_ENTRY_DESCRIPTION = "/d";
     public static final String DELETE_ENTRY = "/del";
     public static final String QUIT = "/q";
+    public static final String SHOW_ALL = "/a";
 }

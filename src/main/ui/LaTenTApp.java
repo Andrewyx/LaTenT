@@ -51,12 +51,13 @@ public class LaTenTApp {
                 this.newEntry();
                 break;
             case Constants.FIND_ENTRY:
-                System.out.println("Finding Entry");
                 this.findEntry();
                 break;
             case Constants.OPEN_ENTRY:
-                System.out.println("Editing Entry");
                 this.openEntry();
+                break;
+            case Constants.SHOW_ALL:
+                this.showAllEntries();
                 break;
             case Constants.QUIT:
                 System.out.println("Quitting");
@@ -75,20 +76,10 @@ public class LaTenTApp {
     }
 
     /**
-     * EFFECTS: Displays the command info from the catalogue
+     * EFFECTS: Displays a specific command info from the catalogue through the find menu
      */
     private void findEntry() {
-        System.out.println("Give Entry Command");
-        userInputString = USER_INPUT.next();
-        if (catalogue.hasEntry(userInputString)) {
-            Entry activeEntry = catalogue.getCatalogueEntry(userInputString);
-            System.out.println("Command Title: " + activeEntry.getTitle());
-            System.out.println("LaTeX Command: " + activeEntry.getCommand());
-            System.out.println("Description: " + activeEntry.getDescription());
-
-        } else {
-            System.out.println("Entry Not Found");
-        }
+        this.activeWidget = new EntryViewer(catalogue);
     }
 
     /**
@@ -96,6 +87,7 @@ public class LaTenTApp {
      * EFFECTS: Opens the given entry in the activeWidget
      */
     private void openEntry() {
+        System.out.println("Editing Entry");
         System.out.println("Give Entry Command to Open");
         userInputString = USER_INPUT.next();
         if (catalogue.hasEntry(userInputString)) {
@@ -105,6 +97,14 @@ public class LaTenTApp {
         } else {
             System.out.println("Entry not found");
         }
+    }
+
+    /**
+     * EFFECTS: Shows all the entries in the catalogue
+     */
+    private void showAllEntries() {
+        System.out.println("Showing all entries: ");
+        this.activeWidget = new EntryViewer();
     }
 
     /**
@@ -121,6 +121,7 @@ public class LaTenTApp {
         System.out.println("<Create Entry> | " + Constants.CREATE_ENTRY);
         System.out.println("<Find Entry> | " + Constants.FIND_ENTRY);
         System.out.println("<Open Entry> | " + Constants.OPEN_ENTRY);
+        System.out.println("<Show All Entries> | " + Constants.SHOW_ALL);
         System.out.println("<Quit App> | " + Constants.QUIT);
     }
 }

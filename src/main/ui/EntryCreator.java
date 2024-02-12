@@ -16,7 +16,7 @@ public class EntryCreator extends Widget {
      * EFFECTS: Runs Entry creation widget
      */
     @Override
-    public void runWidget() {
+    protected void runWidget() {
         Entry newEntry = this.runCreateEntry();
         if (newEntry != null) {
             LaTenTApp.getCatalogue().addEntry(newEntry);

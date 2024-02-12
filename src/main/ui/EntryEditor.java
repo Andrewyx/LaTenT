@@ -24,7 +24,7 @@ public class EntryEditor extends Widget {
      * EFFECTS: Runs editor widget
      */
     @Override
-    public void runWidget() {
+    protected void runWidget() {
         this.runEditor(this.activeEntry);
     }
 
@@ -38,8 +38,9 @@ public class EntryEditor extends Widget {
             System.out.println("Change Title -> " + Constants.EDIT_ENTRY_TITLE);
             System.out.println("Change Command -> " + Constants.EDIT_ENTRY_COMMAND);
             System.out.println("Change Description -> " + Constants.EDIT_ENTRY_DESCRIPTION);
+            System.out.println("Delete Current Entry -> " + Constants.DELETE_ENTRY);
             System.out.println("Finish & Quit -> " + Constants.QUIT);
-            this.readNextLine();
+            this.readNext();
             this.handleInput(this.userText);
         }
     }
@@ -122,8 +123,13 @@ public class EntryEditor extends Widget {
      *  EFFECTS: Updates the entry in the catalogue with new values
      */
     private void updateEntry(Entry newEntry, Entry oldEntry) {
-        LaTenTApp.getCatalogue().removeEntry(oldEntry);
-        LaTenTApp.getCatalogue().addEntry(newEntry);
+        if (newEntry == null) {
+            System.out.println("Removed: " + oldEntry.getTitle());
+        } else {
+            LaTenTApp.getCatalogue().removeEntry(oldEntry);
+            LaTenTApp.getCatalogue().addEntry(newEntry);
+        }
+
     }
 
     /**
@@ -133,6 +139,8 @@ public class EntryEditor extends Widget {
     private void deleteEntry() {
         if (super.confirmChoice()) {
             LaTenTApp.getCatalogue().removeEntry(activeEntry);
+            this.activeEntry = null;
+            this.editorState = false;
         } else {
             System.out.println("Cancelling Deletion");
         }

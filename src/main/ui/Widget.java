@@ -27,9 +27,17 @@ public abstract class Widget {
     }
 
     /**
+     * MODIFIES: this
+     * EFFECTS: reads the next input from the user and saves it
+     */
+    protected void readNext() {
+        this.userText = this.userInput.next().toLowerCase();
+    }
+
+    /**
      * EFFECTS: Runs the main widget processes
      */
-    public abstract void runWidget();
+    protected abstract void runWidget();
 
     /**
      * EFFECTS: produces true if the user enters confirm

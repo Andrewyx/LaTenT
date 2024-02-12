@@ -3,13 +3,14 @@ package model;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Main catalogue class containing entry manipulation and log functions, list of entries
  */
 public class Catalogue {
 
-    private HashMap<String, Entry> catalogue;
+    private Map<String, Entry> catalogue;
 
     /**
      * EFFECTS: Creates new catalogue with no entries yet
@@ -64,5 +65,19 @@ public class Catalogue {
      */
     public int getCatalogueSize() {
         return this.catalogue.size();
+    }
+
+    /**
+     * EFFECTS: Returns true if the catalogue is empty
+     */
+    public boolean isEmpty() {
+        return this.getCatalogueSize() == 0;
+    }
+
+    /**
+     * EFFECTS: Returns the catalogue as a whole
+     */
+    public Map<String, Entry> getCatalogue() {
+        return this.catalogue;
     }
 }
