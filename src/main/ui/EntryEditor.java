@@ -2,10 +2,8 @@ package ui;
 
 import model.Entry;
 
-import java.util.Scanner;
-
 /**
- * Opens Editor interface for creating or modifying entries
+ * Opens Editor interface for modifying or deleting entries
  */
 public class EntryEditor extends Widget {
     private Entry activeEntry;
@@ -19,11 +17,12 @@ public class EntryEditor extends Widget {
     }
 
     /**
+     * MODIFIES: this
      * EFFECTS: Runs editor widget
      */
     @Override
     public void runWidget() {
-
+        this.runEditor(this.activeEntry);
     }
 
     /**
@@ -32,54 +31,49 @@ public class EntryEditor extends Widget {
      */
     public void runEditor(Entry entry) {
         while (this.editorState) {
-
+            System.out.println("Editing: " + entry.getCommand());
+            System.out.println("Change Title -> " + Constants.EDIT_ENTRY_TITLE);
+            System.out.println("Change Command -> " + Constants.EDIT_ENTRY_COMMAND);
+            System.out.println("Change Description -> " + Constants.EDIT_ENTRY_DESCRIPTION);
+            this.userText =  this.userInput.nextLine().toLowerCase();
         }
     }
 
     /**
-     * EFFECTS: Deletes the provided entry from the catalogue
+     * REQUIRES: input can not be null
+     * MODIFIES: this
+     * EFFECTS: reads and processes user input
      */
-    private void deleteEntry(Entry entry) {
-        //stub
-    }
-
-
-    /**
-     *  MODIFIES: this
-     *  EFFECTS: Runs the create new entry process and processes user input
-     */
-    public Entry runCreateEntry() {
-        String title;
-        String command;
-        String description;
-        while (this.editorState) {
-            System.out.println("Enter new Entry Title: ");
-            title = this.userInput.nextLine();
-
-            System.out.println("Enter new Entry Command: ");
-            command = this.userInput.nextLine();
-
-            System.out.println("Enter new Entry Description: ");
-            description = this.userInput.nextLine();
-            if (confirmChoice()) {
-                return new Entry(title, description, command);
-            }
+    private void handleInput(String input) {
+        switch (input) {
+            case Constants.EDIT_ENTRY_COMMAND:
+                System.out.println("Enter new Command");
+                this.newEntry();
+                break;
+            case Constants.EDIT_ENTRY_TITLE:
+                System.out.println("Enter new Title");
+                this.findEntry();
+                break;
+            case Constants.EDIT_ENTRY_DESCRIPTION:
+                System.out.println("Enter new Description");
+                this.openEntry();
+                break;
+            case Constants.DELETE_ENTRY:
+                System.out.println("DELETING ENTRY");
+                this.deleteEntry();
+                break;
         }
-        return null;
     }
 
     /**
-     * EFFECTS: produces true if the user enters confirm
+     * MODIFIES: Catalogue in LaTenTApp
+     * EFFECTS: Deletes the current active entry from the catalogue
      */
-    private boolean confirmChoice() {
-        while (true) {
-            System.out.println("Type <YES> to confirm choice, or <q> to exit");
-            String userText = this.userInput.next().toLowerCase();
-            if (userText.equals("yes")) {
-                return true;
-            } else if (userText.equals("q")) {
-                return false;
-            }
+    private void deleteEntry() {
+        if (super.confirmChoice()) {
+            LaTenTApp.getCatalogue().removeEntry(activeEntry);
+        } else {
+            System.out.println("Cancelling Deletion");
         }
     }
 }

@@ -30,7 +30,7 @@ public class LaTenTApp {
      */
     private void runApp() {
         String inputText = null;
-        System.out.println(Graphics.logo);
+        System.out.println(Graphics.LOGO);
         System.out.println("Welcome to LaTent");
         while (this.appState) {
             System.out.println("Enter your command...");
@@ -52,20 +52,21 @@ public class LaTenTApp {
     }
 
     /**
+     * REQUIRES: input can not be null
      * MODIFIES: this
      * EFFECTS: reads and processes user input
      */
     private void handleInput(String input) {
         switch (input) {
-            case "/a":
+            case Constants.CREATE_ENTRY:
                 System.out.println("Creating Entry");
                 this.newEntry();
                 break;
-            case "/f":
+            case Constants.FIND_ENTRY:
                 System.out.println("Finding Entry");
                 this.findEntry();
                 break;
-            case "/o":
+            case Constants.OPEN_ENTRY:
                 System.out.println("Editing Entry");
                 this.openEntry();
                 break;
@@ -109,5 +110,12 @@ public class LaTenTApp {
         this.activeWidget = new EntryEditor(
                 catalogue.getCatalogueEntry(userInputString)
         );
+    }
+
+    /**
+     * EFFECTS: gets the current catalogue
+     */
+    public static Catalogue getCatalogue() {
+        return catalogue;
     }
 }

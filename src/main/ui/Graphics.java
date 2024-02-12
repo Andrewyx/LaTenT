@@ -1,10 +1,12 @@
 package ui;
 
+import java.util.HashMap;
+
 /**
  * Class containing graphics tools or graphics constants
  */
 public class Graphics {
-    public static final String logo =
+    public static final String LOGO =
             "\n"
             + "                               \n"
             + " __        _____         _____ \n"
