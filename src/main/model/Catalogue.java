@@ -46,7 +46,7 @@ public class Catalogue {
     }
 
     /**
-     * EFFECTS: Produces the given entry in the catalogue
+     * EFFECTS: Produces the given entry in the catalogue from its command
      */
     public Entry getCatalogueEntry(String key) {
         return this.catalogue.get(key);

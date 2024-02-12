@@ -15,9 +15,7 @@ as a personal collection of favourite commands/tricks (Much like in Half-Blood P
 Features and specific tasks I would like to accomplish as a **user** with this application.
 
 - As a **user**, I want to be able to add/remove/edit my own commands with descriptions to my collection.
-- As a **user**, I want to be able to filter by different types of commands
-    (eg. styling, notation, environments).
+- As a **user**, I want to be able to see all the commands I have saved so far in my journal.
 - As a **user**, I want to be able to render saved LaTex notation when I am looking through my collection.
-- As a **user**, I want to be able to search for specific commands through keywords
-- As a **user**, I want to be able to learn how get started with LaTeX syntax
+- As a **user**, I want to be able to search for specific commands through keywords to see their details.
 

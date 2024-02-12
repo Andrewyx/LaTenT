@@ -8,6 +8,7 @@ import model.Entry;
 public class EntryCreator extends Widget {
     public EntryCreator() {
         super();
+        this.runWidget();
     }
 
     /**

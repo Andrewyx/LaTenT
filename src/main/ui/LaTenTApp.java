@@ -29,25 +29,14 @@ public class LaTenTApp {
      * EFFECTS: processes the users commands
      */
     private void runApp() {
-        String inputText = null;
         System.out.println(Graphics.LOGO);
         System.out.println("Welcome to LaTent");
         while (this.appState) {
             System.out.println("Enter your command...");
-            inputText = USER_INPUT.next();
-            inputText = inputText.toLowerCase();
-
-            if (inputText.equals("q")) {
-                this.appState = false;
-            } else {
-                System.out.println("Running: " + inputText);
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                this.handleInput(inputText);
-            }
+            this.showCommandOptions();
+            this.userInputString = USER_INPUT.next().toLowerCase();
+            System.out.println("Running: " + this.userInputString);
+            this.handleInput(userInputString);
         }
     }
 
@@ -59,7 +48,6 @@ public class LaTenTApp {
     private void handleInput(String input) {
         switch (input) {
             case Constants.CREATE_ENTRY:
-                System.out.println("Creating Entry");
                 this.newEntry();
                 break;
             case Constants.FIND_ENTRY:
@@ -69,6 +57,10 @@ public class LaTenTApp {
             case Constants.OPEN_ENTRY:
                 System.out.println("Editing Entry");
                 this.openEntry();
+                break;
+            case Constants.QUIT:
+                System.out.println("Quitting");
+                this.appState = false;
                 break;
         }
     }
@@ -106,10 +98,13 @@ public class LaTenTApp {
     private void openEntry() {
         System.out.println("Give Entry Command to Open");
         userInputString = USER_INPUT.next();
-        catalogue.getCatalogueEntry(userInputString);
-        this.activeWidget = new EntryEditor(
-                catalogue.getCatalogueEntry(userInputString)
-        );
+        if (catalogue.hasEntry(userInputString)) {
+            this.activeWidget = new EntryEditor(
+                    catalogue.getCatalogueEntry(userInputString)
+            );
+        } else {
+            System.out.println("Entry not found");
+        }
     }
 
     /**
@@ -117,5 +112,15 @@ public class LaTenTApp {
      */
     public static Catalogue getCatalogue() {
         return catalogue;
+    }
+
+    /**
+     * EFFECTS: shows the main app commands
+     */
+    private void showCommandOptions() {
+        System.out.println("<Create Entry> | " + Constants.CREATE_ENTRY);
+        System.out.println("<Find Entry> | " + Constants.FIND_ENTRY);
+        System.out.println("<Open Entry> | " + Constants.OPEN_ENTRY);
+        System.out.println("<Quit App> | " + Constants.QUIT);
     }
 }

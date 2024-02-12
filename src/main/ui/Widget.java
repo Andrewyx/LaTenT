@@ -16,7 +16,14 @@ public abstract class Widget {
     public Widget() {
         this.editorState = true;
         this.userInput = new Scanner(System.in);
-        this.runWidget();
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: reads the next line from the user and saves it
+     */
+    protected void readNextLine() {
+        this.userText = this.userInput.nextLine().toLowerCase();
     }
 
     /**
