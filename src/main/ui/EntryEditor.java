@@ -35,10 +35,10 @@ public class EntryEditor extends Widget {
     public void runEditor(Entry entry) {
         while (this.editorState) {
             System.out.println("Editing: " + entry.getCommand());
-            System.out.println("Change Title -> " + Constants.EDIT_ENTRY_TITLE);
-            System.out.println("Change Command -> " + Constants.EDIT_ENTRY_COMMAND);
-            System.out.println("Change Description -> " + Constants.EDIT_ENTRY_DESCRIPTION);
-            System.out.println("Delete Current Entry -> " + Constants.DELETE_ENTRY);
+            System.out.println("\t Change Title -> " + Constants.EDIT_ENTRY_TITLE);
+            System.out.println("\t Change Command -> " + Constants.EDIT_ENTRY_COMMAND);
+            System.out.println("\t Change Description -> " + Constants.EDIT_ENTRY_DESCRIPTION);
+            System.out.println("\t Delete Current Entry -> " + Constants.DELETE_ENTRY);
             System.out.println("Finish & Quit -> " + Constants.QUIT);
             this.readNext();
             this.handleInput(this.userText);
@@ -81,7 +81,7 @@ public class EntryEditor extends Widget {
      */
     private void editEntryCommand() {
         while (this.editorState) {
-            super.readNextLine();
+            this.readNextLine();
             this.activeEntry.changeCommand(this.userText);
             if (super.confirmChoice()) {
                 break;
@@ -95,7 +95,7 @@ public class EntryEditor extends Widget {
      */
     private void editEntryTitle() {
         while (this.editorState) {
-            super.readNextLine();
+            this.readNextLine();
             this.activeEntry.changeTitle(this.userText);
             if (super.confirmChoice()) {
                 break;
@@ -109,7 +109,7 @@ public class EntryEditor extends Widget {
      */
     private void editEntryDescription() {
         while (this.editorState) {
-            super.readNextLine();
+            this.readNextLine();
             this.activeEntry.changeDescription(this.userText);
             if (super.confirmChoice()) {
                 break;

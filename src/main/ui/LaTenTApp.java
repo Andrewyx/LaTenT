@@ -1,12 +1,12 @@
 package ui;
 
 import model.Catalogue;
-import model.Entry;
 
 import java.util.Scanner;
 
 /**
- * Main app interface for the project. Responsible for running the app and subsequent processes
+ * Main app interface for the project. Responsible for running the app and subsequent subprocesses.
+ * Instantiating this class starts up the application.
  */
 public class LaTenTApp {
     private static final Scanner USER_INPUT = new Scanner(System.in);
@@ -20,6 +20,7 @@ public class LaTenTApp {
      */
     public LaTenTApp() {
         this.appState = true;
+        USER_INPUT.useDelimiter("\n");
         this.userInputString = null;
         this.runApp();
     }
@@ -118,10 +119,10 @@ public class LaTenTApp {
      * EFFECTS: shows the main app commands
      */
     private void showCommandOptions() {
-        System.out.println("<Create Entry> | " + Constants.CREATE_ENTRY);
-        System.out.println("<Find Entry> | " + Constants.FIND_ENTRY);
-        System.out.println("<Open Entry> | " + Constants.OPEN_ENTRY);
-        System.out.println("<Show All Entries> | " + Constants.SHOW_ALL);
-        System.out.println("<Quit App> | " + Constants.QUIT);
+        System.out.println("\t <Create Entry> " + Constants.CREATE_ENTRY);
+        System.out.println("\t <Find Entry> " + Constants.FIND_ENTRY);
+        System.out.println("\t <Open Entry> " + Constants.OPEN_ENTRY);
+        System.out.println("\t <Show All Entries> " + Constants.SHOW_ALL);
+        System.out.println("\t <Quit App> " + Constants.QUIT);
     }
 }

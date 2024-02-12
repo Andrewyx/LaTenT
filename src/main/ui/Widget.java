@@ -23,7 +23,8 @@ public abstract class Widget {
      * EFFECTS: reads the next line from the user and saves it
      */
     protected void readNextLine() {
-        this.userText = this.userInput.nextLine().toLowerCase();
+        this.userInput.nextLine();
+        this.userText = this.userInput.nextLine();
     }
 
     /**

@@ -12,6 +12,11 @@
       <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-1.0.7/jlatexmath-fop/src/main/java" />
       <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-1.0.7/jlatexmath/src/main/java" />
       <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-1.0.7/jlatexmath/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-example-export/src/test/java" />
+      <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-example-giws/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath-fop/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath/src/main/java" />
+      <root url="file://$USER_HOME$/Downloads/jlatexmath-1.0.7/jlatexmath/src/test/java" />
     </SOURCES>
   </library>
 </component>

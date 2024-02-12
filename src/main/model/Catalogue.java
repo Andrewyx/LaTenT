@@ -1,12 +1,10 @@
 package model;
 
-import org.scilab.forge.jlatexmath.TeXFormula;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Main catalogue class containing entry manipulation and log functions, list of entries
+ * Main catalogue class containing entry manipulation and log functions, list of entries.
  */
 public class Catalogue {
 

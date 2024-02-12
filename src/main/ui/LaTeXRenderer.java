@@ -1,5 +1,6 @@
 package ui;
 
+import org.scilab.forge.jlatexmath.ParseException;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 
@@ -9,7 +10,7 @@ import java.awt.*;
  * Responsible for all LaTex renderings and manipulation, Use for GUI to render LaTeX Symbols
  */
 public class LaTeXRenderer {
-    private String nextLatexItem;
+    private final String nextLatexItem;
 
     /**
      * REQUIRES: valid latex string
@@ -26,7 +27,12 @@ public class LaTeXRenderer {
      * EFFECTS: Renders the current active latex job
      */
     private void render() {
-        TeXFormula formula = new TeXFormula(nextLatexItem);
-        formula.createPNG(TeXConstants.STYLE_DISPLAY,20, "data/latex.png", Color.white, Color.black);
+        try {
+            TeXFormula formula = new TeXFormula(nextLatexItem);
+            formula.createPNG(TeXConstants.STYLE_DISPLAY,20, "data/latex.png", Color.white, Color.black);
+        } catch (ParseException e) {
+            System.out.println("PARSE ERROR");
+            e.printStackTrace();
+        }
     }
 }
