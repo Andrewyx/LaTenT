@@ -1,9 +1,16 @@
 package ui;
 
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import me.xdrop.fuzzywuzzy.model.ExtractedResult;
+import model.Entry;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
- * Abstract class for widgets
+ * Abstract class for all children widgets. Includes all required UI interaction related behaviours
  */
 public abstract class Widget {
     protected boolean editorState;
@@ -53,5 +60,17 @@ public abstract class Widget {
                 return false;
             }
         }
+    }
+
+    /**
+     * EFFECTS: Produces a list of partial matching fuzzy search entries given a list and keyword
+     */
+    protected List<String> searchByKeyword(List<Entry> entryList, String keyword) {
+        List<String> keywordList = new ArrayList<>();
+        for (Entry entry : entryList) {
+            keywordList.add(entry.getCommand());
+        }
+        List<ExtractedResult> matches = FuzzySearch.extractTop(keyword, keywordList, 3);
+        return  matches.stream().map(extractedResult -> extractedResult.getString()).collect(Collectors.toList());
     }
 }

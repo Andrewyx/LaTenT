@@ -4,6 +4,7 @@ import model.Catalogue;
 import model.Entry;
 import org.scilab.forge.jlatexmath.ParseException;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -47,7 +48,8 @@ public class EntryViewer extends Widget {
 
     /**
      * MODIFIES: Catalogue in LaTenTApp
-     * EFFECTS: displays the contents of searched entry command
+     * EFFECTS: displays the contents of searched entry command, or gives closest matching commands if
+     * exact match not found
      */
     private void findOneEntry(Catalogue catalogue) {
         System.out.println("Finding Entry");
@@ -57,7 +59,11 @@ public class EntryViewer extends Widget {
             this.displayEntry(catalogue.getCatalogueEntry(this.userText));
             new LaTeXRenderer(this.userText);
         } else {
-            System.out.println("Entry Not Found");
+            System.out.println("Entry Not Found, did you mean:");
+            for (String name: this.searchByKeyword(
+                    new ArrayList<Entry>(catalogue.getCatalogue().values()), this.userText)) {
+                System.out.println("\t " + name);
+            }
         }
     }
 
