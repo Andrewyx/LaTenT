@@ -1,0 +1,9 @@
+{
+  "catalogue": [
+    {
+      "title": "Blue Text",
+      "description": "name in blue text",
+      "command": "\\textcolor{blue}{my name}"
+    }
+  ]
+}

@@ -18,4 +18,7 @@ Features and specific tasks I would like to accomplish as a **user** with this a
 - As a **user**, I want to be able to see all the commands I have saved so far in my journal.
 - As a **user**, I want to be able to render saved LaTex notation when I am looking through my collection.
 - As a **user**, I want to be able to search for specific commands through keywords to see their details.
+- As a **user**, I want to be able to choose to save my current collection and its commands.
+- As a **user**, I want to be notified and choose to load a pre-existing collection of commands. 
+
 
