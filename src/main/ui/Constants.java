@@ -13,4 +13,6 @@ public class Constants {
     public static final String DELETE_ENTRY = "/del";
     public static final String QUIT = "/q";
     public static final String SHOW_ALL = "/a";
+    public static final String SAVE_CATALOGUE = "/save";
+    public static final String LOAD_CATALOGUE = "/load";
 }

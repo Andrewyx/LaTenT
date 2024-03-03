@@ -1,7 +1,13 @@
 package ui;
 
 import model.Catalogue;
+import org.json.JSONObject;
+import persistence.JsonRead;
+import persistence.JsonWrite;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -60,10 +66,53 @@ public class LaTenTApp {
             case Constants.SHOW_ALL:
                 this.showAllEntries();
                 break;
-            case Constants.QUIT:
-                System.out.println("Quitting");
-                this.appState = false;
+            case Constants.SAVE_CATALOGUE:
+                this.saveCatalogue();
                 break;
+            case Constants.LOAD_CATALOGUE:
+                this.loadCatalogue();
+                break;
+            case Constants.QUIT:
+                this.terminateApp();
+                break;
+        }
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: stops and quits the app
+     */
+    private void terminateApp() {
+        System.out.println("Quitting");
+        this.appState = false;
+    }
+
+    /**
+     * MODIFIES: Data
+     * EFFECTS: Saves the current catalogue to the disk
+     */
+    private void saveCatalogue() {
+        try {
+            JsonWrite writer = new JsonWrite("data/catalogue.json");
+            writer.openFile();
+            writer.write(catalogue);
+            writer.closeFile();
+        } catch (FileNotFoundException e) {
+            System.out.println("There was an error saving the log");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: Loads the existing disk catalogue into the current app
+     */
+    private void loadCatalogue() {
+        try {
+            JsonRead reader = new JsonRead("data/catalogue.json");
+            catalogue = reader.read();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -123,6 +172,8 @@ public class LaTenTApp {
         System.out.println("\t <Find Entry> " + Constants.FIND_ENTRY);
         System.out.println("\t <Open Entry> " + Constants.OPEN_ENTRY);
         System.out.println("\t <Show All Entries> " + Constants.SHOW_ALL);
+        System.out.println("\t <Load Logs From Disk> " + Constants.LOAD_CATALOGUE);
+        System.out.println("\t <Save Logs to Disk> " + Constants.SAVE_CATALOGUE);
         System.out.println("\t <Quit App> " + Constants.QUIT);
     }
 }

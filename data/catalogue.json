@@ -1,0 +1,12 @@
+{"catalogue": [
+    {
+        "description": "this is an integral",
+        "title": "Integral",
+        "command": "\\int_{a}^{b}{h(x)dx}"
+    },
+    {
+        "description": "a whole buynch of blue text",
+        "title": "blue text",
+        "command": "\\textcolor{blue}{thisismytexttoprint}"
+    }
+]}

@@ -1,6 +1,8 @@
 package persistence;
 
 import model.Catalogue;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
@@ -26,7 +28,7 @@ public class JsonWrite {
      * throws FileNotFoundException if file not available.
      */
     public void openFile() throws FileNotFoundException {
-
+        writer = new PrintWriter(new File(saveLocation));
     }
 
     /**
@@ -34,12 +36,16 @@ public class JsonWrite {
      * EFFECTS: writes the serialized json catalogue to the current saveLocation
      */
     public void write(Catalogue catalogue) {
-
+        JSONObject js = new JSONObject();
+        js.put("catalogue", catalogue.getCatalogue().values());
+        writer.print(js.toString(4));
     }
 
     /**
      * MODIFIES: this
-     * EFFECTS: closes the current writer
+     * EFFECTS: closes the writing operation on the current file
      */
-    public void closeWriter() {}
+    public void closeFile() {
+        writer.close();
+    }
 }

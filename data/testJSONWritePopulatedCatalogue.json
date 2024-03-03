@@ -1,9 +1,12 @@
-{
-  "catalogue": [
+{"catalogue": [
     {
-      "title": "Blue Text",
-      "description": "name in blue text",
-      "command": "\\textcolor{blue}{my name}"
+        "description": "is an integral",
+        "title": "Integral",
+        "command": "\\int_{a}^{b}{h(x)dx}"
+    },
+    {
+        "description": "name in blue text",
+        "title": "Blue Text",
+        "command": "\\textcolor{blue}{myname}"
     }
-  ]
-}
+]}

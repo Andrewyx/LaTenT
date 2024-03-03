@@ -3,7 +3,12 @@
     {
       "title": "Blue Text",
       "description": "name in blue text",
-      "command": "\\textcolor{blue}{my name}"
+      "command": "\\textcolor{blue}{myname}"
+    },
+    {
+      "title": "Integral",
+      "description": "is an integral",
+      "command": "\\int_{a}^{b}{h(x)dx}"
     }
   ]
 }

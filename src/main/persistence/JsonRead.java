@@ -1,11 +1,15 @@
 package persistence;
 
 import model.Catalogue;
+import model.Entry;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Represents a reader for JSON catalogues from a json file
@@ -24,8 +28,9 @@ public class JsonRead {
     /**
      * EFFECTS: produces the catalogue read from the current filepath
      */
-    public Catalogue read() {
-        return null;
+    public Catalogue read() throws IOException {
+        String text = readFile();
+        return parseJsonToCatalogue(new JSONObject(text));
     }
 
     /**
@@ -44,10 +49,19 @@ public class JsonRead {
     }
 
     /**
+     * EFFECTS: returns the current file path of reader
+     */
+    public String getFilePath() {
+        return this.filePath.toString();
+    }
+
+    /**
      * EFFECTS: parses and returns catalogue from the json at the current file path
      */
     private Catalogue parseJsonToCatalogue(JSONObject jsonObject) {
-        return null;
+        Catalogue catalogue = new Catalogue();
+        addEntries(catalogue, jsonObject);
+        return catalogue;
     }
 
     /**
@@ -55,7 +69,11 @@ public class JsonRead {
      * EFFECTS: adds the entries in the json to the catalogue
      */
     private void addEntries(Catalogue catalogue, JSONObject jsonObject) {
-
+        JSONArray array = jsonObject.getJSONArray("catalogue");
+        for (Object obj: array) {
+            JSONObject newjson = (JSONObject) obj;
+            addEntry(catalogue, newjson);
+        }
     }
 
     /**
@@ -63,7 +81,10 @@ public class JsonRead {
      * EFFECTS: parses the entry from the json and adds it to the catalogue
      */
     private void addEntry(Catalogue catalogue, JSONObject jsonObject) {
-
+        String title = jsonObject.getString("title");
+        String description = jsonObject.getString("description");
+        String command = jsonObject.getString("command");
+        catalogue.addEntry(new Entry(title, description, command));
     }
 
 }
