@@ -5,6 +5,11 @@
         "command": "\\int_{a}^{b}{h(x)dx}"
     },
     {
+        "description": "is a left arrow",
+        "title": "Left Arrow",
+        "command": "\\leftarrow"
+    },
+    {
         "description": "a whole buynch of blue text",
         "title": "blue text",
         "command": "\\textcolor{blue}{thisismytexttoprint}"

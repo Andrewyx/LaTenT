@@ -5,6 +5,8 @@ import org.json.JSONObject;
 import persistence.JsonRead;
 import persistence.JsonWrite;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,7 +30,33 @@ public class LaTenTApp {
         this.appState = true;
         USER_INPUT.useDelimiter("\n");
         this.userInputString = null;
+        this.initWindow();
         this.runApp();
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: starts main app window
+     */
+    private void initWindow() {
+        JFrame frame = new JFrame();
+
+        frame.setLayout(new BorderLayout());
+        frame.setMinimumSize(new Dimension(500, 500));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+        JPanel panel = new JPanel();
+        panel.setBounds(40, 80, 200, 200); // Set panel position and size
+        panel.setBackground(Color.gray); // Set panel background color
+
+        JButton button1 = new JButton("Button 1");
+        button1.setBounds(50, 100, 80, 30);
+        button1.setBackground(Color.yellow);
+        panel.add(button1);
+        frame.add(panel);
+
     }
 
     /**
