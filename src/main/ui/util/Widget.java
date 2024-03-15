@@ -1,4 +1,4 @@
-package ui;
+package ui.util;
 
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import me.xdrop.fuzzywuzzy.model.ExtractedResult;

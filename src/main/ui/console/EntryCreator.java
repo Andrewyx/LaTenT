@@ -1,11 +1,14 @@
-package ui;
+package ui.console;
 
 import model.Entry;
+import ui.util.Creator;
+import ui.LaTenTApp;
+import ui.util.Widget;
 
 /**
  * Entry Creator widget to construct new Entries
  */
-public class EntryCreator extends Widget {
+public class EntryCreator extends Widget implements Creator {
     public EntryCreator() {
         super();
         this.runWidget();
@@ -27,6 +30,7 @@ public class EntryCreator extends Widget {
      *  MODIFIES: this
      *  EFFECTS: Runs the create new entry process and processes user input
      */
+    @Override
     public Entry runCreateEntry() {
         String title;
         String command;

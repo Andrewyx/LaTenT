@@ -1,8 +1,11 @@
-package ui;
+package ui.console;
 
 import model.Catalogue;
 import model.Entry;
-import org.scilab.forge.jlatexmath.ParseException;
+import ui.LaTeXRenderer;
+import ui.LaTenTApp;
+import ui.util.Viewer;
+import ui.util.Widget;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -10,7 +13,7 @@ import java.util.Map;
 /**
  * Class for displaying all the entries in the catalogue saved so far
  */
-public class EntryViewer extends Widget {
+public class EntryViewer extends Widget implements Viewer {
 
     public EntryViewer() {
         super();
@@ -33,7 +36,8 @@ public class EntryViewer extends Widget {
     /**
      * EFFECTS: Displays the contents of the entire catalogue
      */
-    private void displayAllEntries() {
+    @Override
+    public void displayAllEntries() {
         Catalogue catalogue = LaTenTApp.getCatalogue();
         if (catalogue.isEmpty()) {
             System.out.println("Catalogue is empty, nothing to show here");
@@ -70,7 +74,8 @@ public class EntryViewer extends Widget {
     /**
      * EFFECTS: Displays the details of the given entry
      */
-    private void displayEntry(Entry entry) {
+    @Override
+    public void displayEntry(Entry entry) {
         System.out.println("Command Title: " + entry.getTitle());
         System.out.println("LaTeX Command: " + entry.getCommand());
         System.out.println("Description: " + entry.getDescription());

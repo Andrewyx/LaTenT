@@ -1,4 +1,4 @@
-package ui;
+package ui.util;
 
 /**
  * Class containing System Constants & commands

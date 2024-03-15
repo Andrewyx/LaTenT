@@ -1,13 +1,16 @@
 package ui;
 
 import model.Catalogue;
-import org.json.JSONObject;
 import persistence.JsonRead;
 import persistence.JsonWrite;
+import ui.console.EntryCreator;
+import ui.console.EntryEditor;
+import ui.console.EntryViewer;
+import ui.swing.LaTenTWindow;
+import ui.util.Constants;
+import ui.util.Graphics;
+import ui.util.Widget;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -22,6 +25,7 @@ public class LaTenTApp {
     private boolean appState;
     private String userInputString;
     private Widget activeWidget;
+    private LaTenTWindow appWindow;
 
     /**
      * EFFECTS: Starts new instance of the app and runs it, with a new catalogue
@@ -39,24 +43,7 @@ public class LaTenTApp {
      * EFFECTS: starts main app window
      */
     private void initWindow() {
-        JFrame frame = new JFrame();
-
-        frame.setLayout(new BorderLayout());
-        frame.setMinimumSize(new Dimension(500, 500));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-        JPanel panel = new JPanel();
-        panel.setBounds(40, 80, 200, 200); // Set panel position and size
-        panel.setBackground(Color.gray); // Set panel background color
-
-        JButton button1 = new JButton("Button 1");
-        button1.setBounds(50, 100, 80, 30);
-        button1.setBackground(Color.yellow);
-        panel.add(button1);
-        frame.add(panel);
-
+        this.appWindow = new LaTenTWindow();
     }
 
     /**
