@@ -10,12 +10,22 @@ public class EntryViewerWindow extends Window {
      */
     public EntryViewerWindow() {
         super();
+        this.initWindow();
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: initializes the window
+     */
+    @Override
+    protected void initWindow() {
+
     }
 
     /**
      * EFFECTS: Renders the catalogue dropdown
      */
-    public void displayCatalogueDropdown() {
+    private void displayCatalogueDropdown() {
         EntryViewerPanel dropdown = new EntryViewerPanel();
         panel.add(dropdown.getPanel());
 

@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * Instance represents the main LaTenT App GUI instance using java swing.
  */
-public class LaTenTWindow extends Window {
+public class LaTenTWindow {
     private JFrame frame;
     private static JPanel mainPanel;
     private static CardLayout cardLayout;
@@ -33,7 +33,7 @@ public class LaTenTWindow extends Window {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         this.initHomeScreen();
-//        this.initViewScreen();
+        this.initViewScreen();
 //        this.initEditorScreen();
         frame.add(mainPanel);
     }

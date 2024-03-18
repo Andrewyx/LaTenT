@@ -7,16 +7,12 @@ import java.awt.*;
  * Main startup home window greeting the user
  */
 public class HomeWindow extends Window {
-    private JPanel mainPanel;
-    private CardLayout mainLayout;
 
     /**
      * EFFECTS: creates new home window
      */
     public HomeWindow() {
         super();
-        this.mainLayout = LaTenTWindow.getCardLayout();
-        this.mainPanel = LaTenTWindow.getMainPanel();
         this.initWindow();
 
     }
@@ -25,7 +21,8 @@ public class HomeWindow extends Window {
      * MODIFIES: LaTenTWindow
      * EFFECTS: populates main window
      */
-    private void initWindow() {
+    @Override
+    protected void initWindow() {
         JButton startButton = new JButton("Start");
         panel.setBackground(Color.gray);
         panel.setBounds(0, 250, 400, 200);
