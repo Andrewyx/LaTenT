@@ -23,21 +23,25 @@ public class HomeWindow extends Window {
      */
     @Override
     protected void initWindow() {
-        JButton startButton = new JButton("VIEW");
-        this.setBackground(Color.gray);
-        this.setSize(new Dimension(500, 500));
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainLayout.show(mainPanel, "VIEW");
-            }
-        });
-        startButton.setBounds(0, 0, 40, 20);
+        BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
+        this.setLayout(boxLayout);
+
+        JButton startButton = new JButton("START");
+        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        this.setBackground(Color.ORANGE);
+
+        addWindowSwitchAction(startButton, "VIEW");
+
         JLabel title = new JLabel();
-        title.setText("<html><h1>header1 text</h1></html>");
-        title.setBounds(50, 50, 50, 50);
-        this.add(startButton);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setText("LaTenT");
+        title.setBackground(Color.black);
+        title.setFont(new Font("Arial", Font.BOLD, 60));
+        this.add(Box.createVerticalGlue());
         this.add(title);
+        this.add(startButton);
+        this.add(Box.createVerticalGlue());
 
         this.addPanelToMain(this, "HOME");
     }

@@ -2,8 +2,6 @@ package ui.swing;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Viewing panel containing application action interactive options.
@@ -23,26 +21,26 @@ public class EntryViewerWindow extends Window {
      */
     @Override
     protected void initWindow() {
-        //stub
+        BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
+        this.setLayout(boxLayout);
+
         JButton startButton = new JButton("HOME");
-        this.setBackground(Color.blue);
-        this.setSize(new Dimension(500, 500));
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainLayout.show(mainPanel, "HOME");
-            }
-        });
-        startButton.setBounds(0, 0, 40, 20);
+        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.setBackground(Color.PINK);
+
+        addWindowSwitchAction(startButton, "HOME");
+
         JLabel title = new JLabel();
-        title.setText("<html><h1>Other text</h1></html>");
-        title.setBounds(50, 50, 50, 50);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setText("VIEWER PAGE");
+        title.setBackground(Color.black);
+        title.setFont(new Font("Arial", Font.BOLD, 20));
+
         this.add(startButton);
         this.add(title);
 
         addPanelToMain(this, "VIEW");
     }
-
     /**
      * EFFECTS: Renders the catalogue dropdown
      */
