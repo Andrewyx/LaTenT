@@ -6,8 +6,8 @@ import java.awt.*;
 /**
  * Instance represents the main LaTenT App GUI instance using java swing.
  */
-public class LaTenTWindow extends Window {
-    private JFrame frame;
+public class LaTenTWindow {
+    private static JFrame frame;
     private static JPanel mainPanel;
     private static CardLayout cardLayout;
 
@@ -15,9 +15,9 @@ public class LaTenTWindow extends Window {
      * EFFECTS: Creates new skeleton instance of the LaTenT app GUI instance without loading data
      */
     public LaTenTWindow() {
-        this.frame = new JFrame();
-        mainPanel = new JPanel(cardLayout);
+        frame = new JFrame();
         cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
         this.initAppWindow();
     }
 
@@ -27,13 +27,13 @@ public class LaTenTWindow extends Window {
      */
     private void initAppWindow() {
 
-        frame.setLayout(new BorderLayout());
+        frame.setLayout(cardLayout);
         frame.setMinimumSize(new Dimension(500, 500));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         this.initHomeScreen();
-//        this.initViewScreen();
+        this.initViewScreen();
 //        this.initEditorScreen();
         frame.add(mainPanel);
     }
