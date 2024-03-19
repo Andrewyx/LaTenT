@@ -7,6 +7,7 @@ import java.awt.*;
  * Abstract class containing the general details of an abstract GUI window
  */
 public abstract class Window extends JPanel {
+
     protected JPanel mainPanel;
     protected CardLayout mainLayout;
 
@@ -33,5 +34,4 @@ public abstract class Window extends JPanel {
     protected void addPanelToMain(JPanel panel, String label) {
         mainPanel.add(panel, label);
     }
-
 }

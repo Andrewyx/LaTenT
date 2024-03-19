@@ -46,7 +46,7 @@ public class EntryViewerWindow extends Window {
     /**
      * EFFECTS: Renders the catalogue dropdown
      */
-    public void displayCatalogueDropdown() {
+    private void displayCatalogueDropdown() {
         EntryViewerPanel dropdown = new EntryViewerPanel();
         this.add(dropdown.getPanel());
     }
