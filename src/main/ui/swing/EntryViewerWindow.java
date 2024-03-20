@@ -13,7 +13,7 @@ import java.io.IOException;
  * Viewing panel containing application action interactive options.
  */
 public class EntryViewerWindow extends Window {
-    private Entry selectedEntry;
+    private static Entry selectedEntry;
     private EntryViewerPanel viewerPanel;
 
     /**
@@ -73,7 +73,10 @@ public class EntryViewerWindow extends Window {
      */
     private JButton newEntryButton() {
         JButton newEntryButton = new JButton("New Entry");
-        addWindowSwitchAction(newEntryButton, "NEW_ENTRY");
+        newEntryButton.addActionListener(e -> {
+            EntryEditorWindow.setActiveEntry(null);
+            mainLayout.show(mainPanel, "EDITOR");
+        });
         return newEntryButton;
     }
 
@@ -119,7 +122,10 @@ public class EntryViewerWindow extends Window {
      */
     private JButton editButton() {
         JButton editEntry = new JButton("Edit");
-        addWindowSwitchAction(editEntry, "EDIT_ENTRY");
+        editEntry.addActionListener(e -> {
+            EntryEditorWindow.setActiveEntry(selectedEntry);
+            mainLayout.show(mainPanel, "EDITOR");
+        });
         return editEntry;
     }
 
@@ -129,5 +135,13 @@ public class EntryViewerWindow extends Window {
      */
     private void addContentPanels() {
         this.add(viewerPanel);
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: setter for the current active entry
+     */
+    public static void setSelectedEntry(Entry entry) {
+        selectedEntry = entry;
     }
 }

@@ -36,7 +36,7 @@ public class LaTenTWindow {
         frame.setVisible(true);
         this.initHomeScreen();
         this.initViewScreen();
-//        this.initEditorScreen();
+        this.initEditorScreen();
         frame.pack();
         frame.add(mainPanel);
     }
