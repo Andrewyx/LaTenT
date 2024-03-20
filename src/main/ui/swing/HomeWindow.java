@@ -27,8 +27,7 @@ public class HomeWindow extends Window {
     @Override
     protected void initWindow() {
         addBackgroundImage();
-        BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
-        this.setLayout(boxLayout);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JButton startButton = new JButton("START");
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -50,7 +49,12 @@ public class HomeWindow extends Window {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, (981 - mainPanel.getWidth()) / -2, (981 - mainPanel.getHeight()) / -2, this);
+        g.drawImage(
+                image,
+                (981 - mainPanel.getWidth()) / -2,
+                (981 - mainPanel.getHeight()) / -2,
+                this
+        );
     }
 
     /**

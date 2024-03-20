@@ -36,7 +36,8 @@ public abstract class Window extends JPanel {
     private void setupSettings() {
         this.mainLayout = LaTenTWindow.getCardLayout();
         this.mainPanel = LaTenTWindow.getMainPanel();
-        this.setSize(screenSize);
+        this.setPreferredSize(screenSize);
+        LaTenTWindow.getFrame().pack();
     }
 
     /**

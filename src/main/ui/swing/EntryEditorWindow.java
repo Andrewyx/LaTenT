@@ -4,7 +4,23 @@ import model.Entry;
 import ui.util.Creator;
 import ui.util.Editor;
 
-public class EntryEditorWindow implements Editor, Creator {
+/**
+ * Class containing the editor window of the application
+ */
+public class EntryEditorWindow extends Window implements Editor, Creator {
+    private static Entry activeEntry;
+
+    /**
+     * EFFECTS: creates and initializes the editor window
+     */
+    public EntryEditorWindow() {
+        super();
+    }
+
+    @Override
+    void initWindow() {
+
+    }
 
     @Override
     public void editEntryCommand() {
@@ -40,4 +56,5 @@ public class EntryEditorWindow implements Editor, Creator {
     public Entry runCreateEntry() {
         return null;
     }
+
 }

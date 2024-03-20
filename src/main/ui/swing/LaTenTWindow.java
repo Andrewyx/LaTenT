@@ -26,10 +26,8 @@ public class LaTenTWindow {
      * EFFECTS: Starts new LaTenT window on the start screen
      */
     private void initAppWindow() {
-
         frame.setLayout(cardLayout);
-
-        frame.setPreferredSize(new Dimension(700, 700));
+        frame.setPreferredSize(new Dimension(500, 500));
         frame.setMinimumSize(new Dimension(700, 700));
         frame.setMaximumSize(new Dimension(981, 981));
 //        frame.setResizable(false);
@@ -39,6 +37,7 @@ public class LaTenTWindow {
         this.initHomeScreen();
         this.initViewScreen();
 //        this.initEditorScreen();
+        frame.pack();
         frame.add(mainPanel);
     }
 

@@ -82,10 +82,10 @@ public class LaTenTApp {
                 this.showAllEntries();
                 break;
             case Constants.SAVE_CATALOGUE:
-                this.saveCatalogue();
+                saveCatalogue();
                 break;
             case Constants.LOAD_CATALOGUE:
-                this.loadCatalogue();
+                loadCatalogue();
                 break;
             case Constants.QUIT:
                 this.terminateApp();
@@ -106,7 +106,7 @@ public class LaTenTApp {
      * MODIFIES: Data
      * EFFECTS: Saves the current catalogue to the disk
      */
-    private void saveCatalogue() {
+    public static void saveCatalogue() {
         try {
             JsonWrite writer = new JsonWrite("data/catalogue.json");
             writer.openFile();
@@ -122,7 +122,7 @@ public class LaTenTApp {
      * MODIFIES: this
      * EFFECTS: Loads the existing disk catalogue into the current app
      */
-    private void loadCatalogue() {
+    public static void loadCatalogue() {
         try {
             JsonRead reader = new JsonRead("data/catalogue.json");
             catalogue = reader.read();
