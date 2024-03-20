@@ -28,7 +28,11 @@ public class LaTenTWindow {
     private void initAppWindow() {
 
         frame.setLayout(cardLayout);
-        frame.setMinimumSize(new Dimension(500, 500));
+
+        frame.setPreferredSize(new Dimension(700, 700));
+        frame.setMinimumSize(new Dimension(700, 700));
+        frame.setMaximumSize(new Dimension(981, 981));
+//        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -74,5 +78,12 @@ public class LaTenTWindow {
      */
     public static CardLayout getCardLayout() {
         return cardLayout;
+    }
+
+    /**
+     * EFFECTS: getter for frame
+     */
+    public static JFrame getFrame() {
+        return frame;
     }
 }

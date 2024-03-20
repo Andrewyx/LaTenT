@@ -6,9 +6,17 @@ import ui.util.Viewer;
 import javax.swing.*;
 
 /**
- * Class for the main view window containing observable catalogue
+ * Class for the view panel containing observable catalogue
  */
-public class EntryViewerPanel implements Viewer {
+public class EntryViewerPanel extends JPanel implements Viewer {
+
+    /**
+     * EFFECTS: Creates new dual viewing panel for the viewing window
+     */
+    public EntryViewerPanel() {
+
+    }
+
     @Override
     public void displayAllEntries() {
 
@@ -17,9 +25,5 @@ public class EntryViewerPanel implements Viewer {
     @Override
     public void displayEntry(Entry entry) {
 
-    }
-
-    public JPanel getPanel() {
-        return null;
     }
 }

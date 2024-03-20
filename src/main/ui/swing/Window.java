@@ -7,7 +7,7 @@ import java.awt.*;
  * Abstract class containing the general details of an abstract GUI window
  */
 public abstract class Window extends JPanel {
-    public static final Dimension screenSize = new Dimension(500, 500);
+    public static final Dimension screenSize = LaTenTWindow.getFrame().getSize();
     protected JPanel mainPanel;
     protected CardLayout mainLayout;
 

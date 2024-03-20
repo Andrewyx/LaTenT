@@ -41,11 +41,21 @@ public class EntryViewerWindow extends Window {
 
         addPanelToMain(this, "VIEW");
     }
+
     /**
-     * EFFECTS: Renders the catalogue dropdown
+     * MODIFIES: this, LaTentWindow
+     * EFFECTS: Creates and adds a button tray to the viewer panel
      */
-    private void displayCatalogueDropdown() {
-        EntryViewerPanel dropdown = new EntryViewerPanel();
-        this.add(dropdown.getPanel());
+    private void addButtonTray() {
+        //TODO
+    }
+
+    /**
+     * MODIFIES: this, LaTenTWindow
+     * EFFECTS: Creates and adds catalogue viewing panels to the viewer panel
+     */
+    private void addContentPanels() {
+        //TODO
+        this.add((new EntryViewerPanel()));
     }
 }
