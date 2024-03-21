@@ -4,6 +4,8 @@ import model.Entry;
 import ui.util.Creator;
 import ui.util.Editor;
 
+import javax.swing.*;
+
 /**
  * Class containing the editor window of the application
  */
@@ -23,8 +25,23 @@ public class EntryEditorWindow extends Window implements Editor, Creator {
      */
     @Override
     void initWindow() {
-
+        if (activeEntry == null) {
+            this.runCreateEntry();
+        } else {
+            this.editEntry();
+        }
+        JButton cancelButton = new JButton("Cancel");
+        addWindowSwitchAction(cancelButton, "VIEW");
+        this.add(cancelButton);
         addPanelToMain(this, "EDITOR");
+    }
+
+    /**
+     * MODIFIES: this, catalogue, LaTenTWindow
+     * EFFECTS: opens the editor with the active entry to edit
+     */
+    private void editEntry() {
+        //TODO
     }
 
     @Override
