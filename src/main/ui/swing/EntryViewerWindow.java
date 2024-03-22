@@ -35,12 +35,6 @@ public class EntryViewerWindow extends Window {
 
         addButtonTray();
         addContentPanels();
-//        JLabel title = new JLabel();
-//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        title.setText("VIEWER PAGE");
-//        title.setBackground(Color.black);
-//        title.setFont(new Font("Arial", Font.BOLD, 20));
-//        this.add(title);
         addPanelToMain(this, "VIEW");
     }
 
