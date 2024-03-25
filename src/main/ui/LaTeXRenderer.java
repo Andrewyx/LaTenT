@@ -26,13 +26,8 @@ public class LaTeXRenderer {
      * MODIFIES: data/latex.png
      * EFFECTS: Renders the current active latex job
      */
-    private void render() {
-        try {
-            TeXFormula formula = new TeXFormula(nextLatexItem);
-            formula.createPNG(TeXConstants.STYLE_DISPLAY,20, "data/latex.png", Color.white, Color.black);
-        } catch (ParseException e) {
-            System.out.println("PARSE ERROR");
-            e.printStackTrace();
-        }
+    private void render() throws ParseException {
+        TeXFormula formula = new TeXFormula(nextLatexItem);
+        formula.createPNG(TeXConstants.STYLE_DISPLAY,200, "data/latex.png", Color.white, Color.black);
     }
 }

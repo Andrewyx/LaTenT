@@ -137,7 +137,6 @@ public class EntryEditor extends Widget implements Editor {
             LaTenTApp.getCatalogue().removeEntry(oldEntry);
             LaTenTApp.getCatalogue().addEntry(newEntry);
         }
-
     }
 
     /**
@@ -159,7 +158,6 @@ public class EntryEditor extends Widget implements Editor {
      * MODIFIES: this
      * EFFECTS: Clones the given entry as the class' initial entry
      */
-    @Override
     public void copyEntry(Entry entry) {
         this.initialEntry = entry;
     }

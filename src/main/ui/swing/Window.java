@@ -61,4 +61,13 @@ public abstract class Window extends JPanel {
     protected void addWindowSwitchAction(JButton button, String destination) {
         button.addActionListener(e -> mainLayout.show(mainPanel, destination));
     }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: Refreshes and repaints the current window
+     */
+    protected void refreshPane() {
+        this.validate();
+        this.repaint();
+    }
 }

@@ -1,25 +1,32 @@
 package ui.swing;
 
 import model.Entry;
+import org.scilab.forge.jlatexmath.ParseException;
+import ui.LaTeXRenderer;
 import ui.LaTenTApp;
 import ui.util.Creator;
-import ui.util.Editor;
+import ui.util.LaTeXImageLabel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Class containing the editor window of the application
  */
-public class EntryEditorWindow extends Window implements Editor, Creator {
+public class EntryEditorWindow extends Window implements Creator {
     private static Entry activeEntry;
-    private JTextField enteredTitle;
-    private JTextArea enteredDescription;
-    private JTextField enteredCommand;
-    private JPanel entryPanel;
+    private static JTextField enteredTitle;
+    private static JTextArea enteredDescription;
+    private static JTextField enteredCommand;
+    private JPanel entryEditorPanel;
     private JPanel buttonPanel;
+    private static JButton submissionButton;
 
     /**
      * EFFECTS: creates and initializes the editor window
@@ -34,42 +41,159 @@ public class EntryEditorWindow extends Window implements Editor, Creator {
      */
     @Override
     void initWindow() {
-        enteredCommand = new JTextField(16);
-        enteredTitle = new JTextField(16);
-        enteredDescription = new JTextArea(20, 16);
-        entryPanel = new JPanel();
-        entryPanel.setLayout(new GridLayout(1, 2));
-        entryPanel.setBackground(Color.gray);
+        this.setLayout(new BorderLayout());
+        initButtonTray();
+        initEditorPanel();
+        updateMode();
+        addPanelToMain(this, "EDITOR");
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: initializes the panel containing button tray for user commands
+     */
+    private void initButtonTray() {
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.ORANGE);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(buttonPanel);
-        this.add(entryPanel);
-
-        if (activeEntry == null) {
-            this.runCreateEntry();
-        } else {
-            this.editEntry();
-        }
         JButton cancelButton = new JButton("Cancel");
         addWindowSwitchAction(cancelButton, "VIEW");
         buttonPanel.add(cancelButton);
 
+        submissionButton = new JButton("NULL");
+        buttonPanel.add(submissionButton, "SWAP");
+        this.add(buttonPanel, BorderLayout.NORTH);
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: initializes editor panel region
+     */
+    private void initEditorPanel() {
+        entryEditorPanel = new JPanel();
+        entryEditorPanel.setLayout(new GridLayout(1, 2));
+        entryEditorPanel.setBackground(Color.gray);
+        entryEditorPanel.add(initUserInputPanel());
+        entryEditorPanel.add(initValidationPanel());
+        this.add(entryEditorPanel);
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: sets the submission button to add new entry
+     */
+    private void setSubmissionButtonToNew() {
         JButton confirmButton = new JButton("Confirm and Add");
         confirmButton.addActionListener(e -> {
             LaTenTApp.getCatalogue().addEntry(fetchEntryFromText());
+            LaTenTWindow.getEntryViewerWindow().getViewerPanel().updateDisplayAllEntries();
+            refreshPane();
+            mainLayout.show(mainPanel, "VIEW");
         });
-        buttonPanel.add(confirmButton);
-        addPanelToMain(this, "EDITOR");
+
+        buttonPanel.remove(submissionButton);
+        submissionButton = confirmButton;
+        buttonPanel.add(submissionButton);
+        this.revalidate();
+        this.repaint();
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: sets the submission button to edit pre-existing entry
+     */
+    private void setSubmissionButtonToEdit() {
+        JButton editButton = new JButton("Confirm and Change");
+        editButton.addActionListener(e -> {
+            updateEntry(fetchEntryFromText(), activeEntry);
+            LaTenTWindow.getEntryViewerWindow().getViewerPanel().updateDisplayAllEntries();
+            refreshPane();
+            mainLayout.show(mainPanel, "VIEW");
+        });
+
+        buttonPanel.remove(submissionButton);
+        submissionButton = editButton;
+        buttonPanel.add(submissionButton);
+        this.revalidate();
+        this.repaint();
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: initializes the editor panel's sub-panel for rendering commands
+     */
+    private JPanel initValidationPanel() {
+        JPanel imagePanel = new JPanel();
+        imagePanel.setBackground(Color.black);
+        imagePanel.setLayout(new GridLayout(2, 1));
+        LaTeXImageLabel label = new LaTeXImageLabel();
+        JButton renderButton = new JButton("Render");
+
+        renderButton.addActionListener(e -> {
+            try {
+                new LaTeXRenderer(enteredCommand.getText());
+            } catch (ParseException exception) {
+                label.setIcon(null);
+                label.setText("INVALID COMMAND");
+            }
+            label.refreshLabelLatexIcon();
+        });
+
+        imagePanel.add(label);
+        imagePanel.add(renderButton);
+
+        return imagePanel;
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: initializes the text fields for the editor
+     */
+    private void makeTextInputs() {
+        enteredCommand = new JTextField(16);
+        enteredCommand.setMaximumSize(new Dimension(10000, enteredCommand.getPreferredSize().height));
+        enteredTitle = new JTextField(16);
+        enteredTitle.setMaximumSize(new Dimension(10000, enteredTitle.getPreferredSize().height));
+        enteredDescription = new JTextArea(20, 16);
+        enteredDescription.setLineWrap(true);
+        enteredDescription.setWrapStyleWord(true);
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: initializes the sub-panel containing user inputs text fields for editing entries
+     */
+    private JPanel initUserInputPanel() {
+        this.makeTextInputs();
+
+        Color panelColors = new Color(221, 222, 221);
+        JPanel userInputPanel = new JPanel();
+
+        userInputPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        userInputPanel.setLayout(new BoxLayout(userInputPanel, BoxLayout.Y_AXIS));
+        userInputPanel.setBackground(panelColors);
+
+        userInputPanel.add(makeLabelLeftWithText(
+                "Title",
+                enteredTitle,
+                panelColors));
+        userInputPanel.add(makeLabelLeftWithText(
+                "Command",
+                enteredCommand,
+                panelColors));
+        userInputPanel.add(makeLabelLeftWithText(
+                "Description",
+                enteredDescription,
+                panelColors));
+        return userInputPanel;
     }
 
     /**
      * EFFECTS: makes label with given text and left alignment
      */
-    private JPanel makeLabelLeftWithText(String text, JTextComponent textBox, Dimension maxSize) {
+    private JPanel makeLabelLeftWithText(String text, JTextComponent textBox, Color color) {
         JPanel panel = new JPanel();
-        panel.setMaximumSize(maxSize);
+        panel.setBackground(color);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JLabel label = new JLabel(text);
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -77,7 +201,6 @@ public class EntryEditorWindow extends Window implements Editor, Creator {
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(label);
         panel.add(textBox);
-//        panel.add(Box.createHorizontalGlue());
         return panel;
     }
 
@@ -87,26 +210,9 @@ public class EntryEditorWindow extends Window implements Editor, Creator {
      */
     @Override
     public Entry runCreateEntry() {
-        JPanel userInputPanel = new JPanel();
-        userInputPanel.setLayout(new BoxLayout(userInputPanel, BoxLayout.Y_AXIS));
-        userInputPanel.add(makeLabelLeftWithText(
-                "Title",
-                enteredTitle,
-                new Dimension(250, 40)
-        ));
-        userInputPanel.add(makeLabelLeftWithText(
-                "Command",
-                enteredCommand,
-                new Dimension(250, 40)));
-        userInputPanel.add(makeLabelLeftWithText(
-                "Description",
-                enteredDescription,
-                new Dimension(250, 300)));
-        enteredDescription.setLineWrap(true);
-        enteredDescription.setWrapStyleWord(true);
-        entryPanel.add(userInputPanel);
-
-        entryPanel.add(new JPanel());
+        enteredTitle.setText("");
+        enteredCommand.setText("");
+        enteredDescription.setText("");
         return null;
     }
 
@@ -114,53 +220,63 @@ public class EntryEditorWindow extends Window implements Editor, Creator {
      * EFFECTS: returns an entry with the users entered data on the panel
      */
     private Entry fetchEntryFromText() {
-        return null;
+        Entry entry = new Entry(
+                enteredTitle.getText(),
+                enteredDescription.getText(),
+                enteredCommand.getText()
+        );
+        return entry;
     }
 
     /**
      * MODIFIES: this, catalogue, LaTenTWindow
      * EFFECTS: opens the editor with the active entry to edit
      */
-    private void editEntry() {
-        //TODO
+    private void loadEditEntry() {
+        enteredTitle.setText(activeEntry.getTitle());
+        enteredDescription.setText(activeEntry.getDescription());
+        enteredCommand.setText(activeEntry.getCommand());
     }
 
-    @Override
-    public void editEntryCommand() {
-        //TODO
-    }
-
-    @Override
-    public void editEntryTitle() {
-        //TODO
-    }
-
-    @Override
-    public void editEntryDescription() {
-        //TODO
-    }
-
-    @Override
+    /**
+     * REQUIRES: oldEntry must exist in catalogue
+     * MODIFIES: this, Catalogue in LaTenTApp
+     * EFFECTS: Updates the entry in the catalogue with new values
+     */
     public void updateEntry(Entry newEntry, Entry oldEntry) {
-        //TODO
+        LaTenTApp.getCatalogue().removeEntry(oldEntry);
+        LaTenTApp.getCatalogue().addEntry(newEntry);
     }
 
-    @Override
+    /**
+     * MODIFIES: Catalogue in LaTenTApp
+     * EFFECTS: Deletes the current active entry from the catalogue
+     */
     public void deleteEntry() {
-        //TODO
+        LaTenTApp.getCatalogue().removeEntry(activeEntry);
+        activeEntry = null;
     }
-
-    @Override
-    public void copyEntry(Entry entry) {
-        //TODO
-    }
-
 
     /**
      * MODIFIES: this
      * EFFECTS: Sets the current active entry to the given
      */
-    public static void setActiveEntry(Entry entry) {
+    public void setActiveEntry(Entry entry) {
         activeEntry = entry;
+        updateMode();
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: updates the editor's mode to either creation or editing
+     */
+    public void updateMode() {
+        if (activeEntry == null) {
+            this.setSubmissionButtonToNew();
+            this.runCreateEntry();
+        } else {
+            this.setSubmissionButtonToEdit();
+            this.loadEditEntry();
+        }
     }
 }

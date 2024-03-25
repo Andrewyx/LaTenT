@@ -2,6 +2,7 @@ package ui.console;
 
 import model.Catalogue;
 import model.Entry;
+import org.scilab.forge.jlatexmath.ParseException;
 import ui.LaTeXRenderer;
 import ui.LaTenTApp;
 import ui.util.Viewer;
@@ -42,7 +43,7 @@ public class EntryViewer extends Widget implements Viewer {
         if (catalogue.isEmpty()) {
             System.out.println("Catalogue is empty, nothing to show here");
         } else {
-            for (Map.Entry<String, Entry> entry: catalogue.getCatalogue().entrySet()) {
+            for (Map.Entry<String, Entry> entry : catalogue.getCatalogue().entrySet()) {
                 System.out.println("\n");
                 displayEntry(entry.getValue());
 
@@ -61,11 +62,17 @@ public class EntryViewer extends Widget implements Viewer {
         this.userText = this.userInput.next();
         if (catalogue.hasEntry(this.userText)) {
             this.displayEntry(catalogue.getCatalogueEntry(this.userText));
-            new LaTeXRenderer(this.userText);
+            try {
+                new LaTeXRenderer(this.userText);
+
+            } catch (ParseException e) {
+                System.out.println("PARSE ERROR, INVALID COMMAND");
+                e.printStackTrace();
+            }
         } else {
             System.out.println("Entry Not Found, did you mean:");
-            for (String name: this.searchByKeyword(
-                    new ArrayList<Entry>(catalogue.getCatalogue().values()), this.userText)) {
+            for (String name : this.searchByKeyword(
+                    new ArrayList<>(catalogue.getCatalogue().values()), this.userText)) {
                 System.out.println("\t " + name);
             }
         }

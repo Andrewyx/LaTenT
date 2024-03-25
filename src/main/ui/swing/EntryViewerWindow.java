@@ -3,11 +3,8 @@ package ui.swing;
 import model.Entry;
 import ui.LaTenTApp;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Viewing panel containing application action interactive options.
@@ -31,9 +28,9 @@ public class EntryViewerWindow extends Window {
     protected void initWindow() {
         BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         viewerPanel = new EntryViewerPanel();
-        this.setLayout(boxLayout);
+        this.setLayout(new BorderLayout(1, 1));
 
-        addButtonTray();
+        this.add(makeButtonTray(), BorderLayout.NORTH);
         addContentPanels();
         addPanelToMain(this, "VIEW");
     }
@@ -42,23 +39,21 @@ public class EntryViewerWindow extends Window {
      * MODIFIES: this, LaTentWindow
      * EFFECTS: Creates and adds a button tray to the viewer panel
      */
-    private void addButtonTray() {
+    private JPanel makeButtonTray() {
         JButton startButton = new JButton("HOME");
-        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.setBackground(Color.PINK);
         this.addWindowSwitchAction(startButton, "HOME");
-        this.add(startButton);
 
-        JLayeredPane tray = new JLayeredPane();
-        tray.setLayout(new BoxLayout(tray, BoxLayout.X_AXIS));
+        JPanel tray = new JPanel();
+        tray.setLayout(new FlowLayout(FlowLayout.CENTER));
         tray.setBackground(Color.ORANGE);
         tray.add(newEntryButton());
         tray.add(loadButton());
         tray.add(saveButton());
         tray.add(deleteButton());
         tray.add(editButton());
+        tray.add(startButton);
 
-        this.add(tray);
+        return tray;
     }
 
     /**
@@ -68,7 +63,7 @@ public class EntryViewerWindow extends Window {
     private JButton newEntryButton() {
         JButton newEntryButton = new JButton("New Entry");
         newEntryButton.addActionListener(e -> {
-            EntryEditorWindow.setActiveEntry(null);
+            LaTenTWindow.getEntryEditorWindow().setActiveEntry(null);
             mainLayout.show(mainPanel, "EDITOR");
         });
         return newEntryButton;
@@ -80,8 +75,11 @@ public class EntryViewerWindow extends Window {
      */
     private JButton loadButton() {
         JButton loadButton = new JButton("Load");
-        loadButton.addActionListener(e -> LaTenTApp.loadCatalogue());
-        return  loadButton;
+        loadButton.addActionListener(e -> {
+            LaTenTApp.loadCatalogue();
+            viewerPanel.updateDisplayAllEntries();
+        });
+        return loadButton;
     }
 
     /**
@@ -103,6 +101,7 @@ public class EntryViewerWindow extends Window {
         deleteEntry.addActionListener(e -> {
             try {
                 LaTenTApp.getCatalogue().removeEntry(selectedEntry);
+                viewerPanel.updateDisplayAllEntries();
             } catch (NullPointerException exception) {
                 System.out.println("No entry selected");
             }
@@ -117,7 +116,7 @@ public class EntryViewerWindow extends Window {
     private JButton editButton() {
         JButton editEntry = new JButton("Edit");
         editEntry.addActionListener(e -> {
-            EntryEditorWindow.setActiveEntry(selectedEntry);
+            LaTenTWindow.getEntryEditorWindow().setActiveEntry(selectedEntry);
             mainLayout.show(mainPanel, "EDITOR");
         });
         return editEntry;
@@ -135,7 +134,14 @@ public class EntryViewerWindow extends Window {
      * MODIFIES: this
      * EFFECTS: setter for the current active entry
      */
-    public static void setSelectedEntry(Entry entry) {
+    public void setSelectedEntry(Entry entry) {
         selectedEntry = entry;
+    }
+
+    /**
+     * EFFECTS: getter for viewer panel
+     */
+    public EntryViewerPanel getViewerPanel() {
+        return viewerPanel;
     }
 }

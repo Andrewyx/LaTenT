@@ -10,6 +10,11 @@
         "command": "\\leftarrow"
     },
     {
+        "description": "Left and right square brackets",
+        "title": "Brackets",
+        "command": "\\left[Math Formula\\right]"
+    },
+    {
         "description": "a whole buynch of blue text",
         "title": "blue text",
         "command": "\\textcolor{blue}{thisismytexttoprint}"

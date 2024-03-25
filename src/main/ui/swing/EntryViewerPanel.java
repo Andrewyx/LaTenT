@@ -1,15 +1,24 @@
 package ui.swing;
 
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import me.xdrop.fuzzywuzzy.model.ExtractedResult;
 import model.Entry;
+import org.scilab.forge.jlatexmath.ParseException;
+import ui.LaTeXRenderer;
 import ui.LaTenTApp;
+import ui.util.LaTeXImageLabel;
 import ui.util.Viewer;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Class for the view panel containing observable catalogue
@@ -17,11 +26,13 @@ import java.util.List;
 public class EntryViewerPanel extends JPanel implements Viewer {
     private final JPanel dropdownPanel;
     private final JPanel infoRenderPanel;
-    private List<String> entryList;
     private JLabel title;
     private JLabel description;
     private JLabel command;
     private DefaultListModel<String> entryListModel;
+    private JList listEntry;
+    private JScrollPane listEntryPanel;
+    private LaTeXImageLabel label;
 
     /**
      * EFFECTS: Creates new dual viewing panel for the viewing window
@@ -35,15 +46,8 @@ public class EntryViewerPanel extends JPanel implements Viewer {
         command = new JLabel();
         dropdownPanel = new JPanel();
         infoRenderPanel = new JPanel();
-        entryList = new ArrayList<>();
-        entryListModel = new DefaultListModel<>();
-        LaTenTApp.loadCatalogue();
-        for (Entry entry: LaTenTApp.getCatalogue().getCatalogue().values()) {
-            entryList.add(entry.getCommand());
-            entryListModel.addElement(entry.getCommand());
-        }
-
-        initPanes();
+        this.updateDisplayAllEntries();
+        this.initPanes();
     }
 
     /**
@@ -52,6 +56,8 @@ public class EntryViewerPanel extends JPanel implements Viewer {
      */
     private void initDropdownPanel() {
         dropdownPanel.setBackground(Color.ORANGE);
+        dropdownPanel.setLayout(new BoxLayout(dropdownPanel, BoxLayout.Y_AXIS));
+        dropdownPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
     }
 
     /**
@@ -59,10 +65,21 @@ public class EntryViewerPanel extends JPanel implements Viewer {
      * EFFECTS: initializes info render panel presets
      */
     private void initInfoRenderPanel() {
-        infoRenderPanel.setLayout(new BoxLayout(infoRenderPanel, BoxLayout.Y_AXIS));
-        infoRenderPanel.add(title);
-        infoRenderPanel.add(command);
-        infoRenderPanel.add(description);
+        infoRenderPanel.setLayout(new GridLayout(2, 1));
+        JPanel captionPanel = new JPanel();
+        captionPanel.setLayout(new BoxLayout(captionPanel, BoxLayout.Y_AXIS));
+        captionPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        title.setFont(new Font("Arial", Font.BOLD, 30));
+        command.setFont(new Font("Arial", Font.PLAIN, 20));
+        description.setFont(new Font("Arial", Font.PLAIN, 20));
+        captionPanel.add(title);
+        captionPanel.add(command);
+        captionPanel.add(description);
+
+        label = new LaTeXImageLabel();
+        infoRenderPanel.add(label);
+
+        infoRenderPanel.add(captionPanel);
         infoRenderPanel.setBackground(Color.gray);
     }
 
@@ -80,20 +97,115 @@ public class EntryViewerPanel extends JPanel implements Viewer {
 
     /**
      * MODIFIES: this
-     * EFFECTS: presents the dropdown panel with entries
+     * EFFECTS: makes new listEntry with event actions
+     */
+    private void makeNewListEntryPanel() {
+        listEntry = new JList(entryListModel);
+        listEntry.setVisibleRowCount(4);
+        listEntry.setPreferredSize(new Dimension(300, 300));
+
+        listEntryPanel = new JScrollPane(listEntry);
+        listEntry.addListSelectionListener(e -> {
+            String selectedEntry = (String) listEntry.getSelectedValue();
+            Entry entry = LaTenTApp.getCatalogue().getCatalogueEntry(selectedEntry);
+            displayEntry(entry);
+            LaTenTWindow.getEntryViewerWindow().setSelectedEntry(entry);
+            try {
+                new LaTeXRenderer(entry.getCommand());
+            } catch (ParseException exception) {
+                label.setIcon(null);
+                label.setText("INVALID COMMAND");
+            }
+            label.refreshLabelLatexIcon();
+        });
+    }
+
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: presents the dropdown panel with entries and search bar
      */
     @Override
     public void displayAllEntries() {
-        JList listEntry = new JList(entryListModel);
-        listEntry.setVisibleRowCount(4);
-        JScrollPane jcp = new JScrollPane(listEntry);
-        dropdownPanel.add(jcp);
-        listEntry.addListSelectionListener(e -> {
-            String selectedFruit = (String) listEntry.getSelectedValue();
-            Entry entry = LaTenTApp.getCatalogue().getCatalogueEntry(selectedFruit);
-            displayEntry(entry);
-            EntryEditorWindow.setActiveEntry(entry);
+        JLabel searchLabel = new JLabel("Search");
+//        searchLabel.setHorizontalAlignment(JLabel.WEST);
+        dropdownPanel.add(searchLabel);
+        dropdownPanel.add(makeSearchbar());
+        makeNewListEntryPanel();
+        dropdownPanel.add(listEntryPanel);
+    }
+
+    /**
+     * EFFECTS: returns search window for dropdown with sorting abilities
+     */
+    private JTextField makeSearchbar() {
+        JTextField searchBar = new JTextField();
+        searchBar.setMaximumSize(new Dimension(50000, 1000));
+        searchBar.addActionListener(e -> {
+            if (Objects.equals(searchBar.getText(), "")) {
+                this.updateDisplayAllEntries();
+            } else {
+                this.updateDisplayAllEntries(this.sortEntryListByString(searchBar.getText()));
+            }
         });
+        return searchBar;
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: reorders the entry list by keyword likeness
+     */
+    private  DefaultListModel<String> sortEntryListByString(String keyword) {
+        ArrayList<String> entryListAsStrings = Collections.list(entryListModel.elements());
+        List<ExtractedResult> rawMatches = FuzzySearch.extractSorted(keyword, entryListAsStrings);
+        List<String> matches = rawMatches.stream().map(extractedResult ->
+                extractedResult.getString()).collect(Collectors.toList());
+        DefaultListModel<String> sortedEntryListModel = new DefaultListModel<>();
+        for (String entryText: matches) {
+            sortedEntryListModel.addElement(entryText);
+        }
+        return sortedEntryListModel;
+    }
+
+    /**
+     * EFFECTS: Returns a default list containing the commands in the catalogue
+     */
+    private DefaultListModel<String> updateEntryListModel() {
+        DefaultListModel<String> entryList = new DefaultListModel<>();
+        for (Entry entry : LaTenTApp.getCatalogue().getCatalogue().values()) {
+            entryList.addElement(entry.getCommand());
+        }
+        return entryList;
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: updates the list of command renders
+     */
+    public void updateDisplayAllEntries() {
+        entryListModel = updateEntryListModel();
+        this.revalidateDropdown();
+    }
+
+    /**
+     * MODIFIES: this
+     * EFFECTS: updates the list of command renders to the given
+     */
+    public void updateDisplayAllEntries(DefaultListModel<String> newEntryListModel) {
+        entryListModel = newEntryListModel;
+        this.revalidateDropdown();
+    }
+
+    private void revalidateDropdown() {
+        try {
+            dropdownPanel.remove(listEntryPanel);
+            makeNewListEntryPanel();
+            dropdownPanel.add(listEntryPanel);
+            this.revalidate();
+            this.repaint();
+        } catch (NullPointerException e) {
+            // Do nothing
+        }
     }
 
     /**

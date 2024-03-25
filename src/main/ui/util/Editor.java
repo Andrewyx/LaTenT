@@ -16,5 +16,4 @@ public interface Editor {
 
     void deleteEntry();
 
-    void copyEntry(Entry entry);
 }

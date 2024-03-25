@@ -1,5 +1,7 @@
 package ui.swing;
 
+import ui.LaTeXRenderer;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,6 +12,9 @@ public class LaTenTWindow {
     private static JFrame frame;
     private static JPanel mainPanel;
     private static CardLayout cardLayout;
+    private static EntryEditorWindow entryEditorWindow;
+    private static HomeWindow homeWindow;
+    private static EntryViewerWindow entryViewerWindow;
 
     /**
      * EFFECTS: Creates new skeleton instance of the LaTenT app GUI instance without loading data
@@ -18,6 +23,7 @@ public class LaTenTWindow {
         frame = new JFrame();
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
+        new LaTeXRenderer("null");
         this.initAppWindow();
     }
 
@@ -31,14 +37,18 @@ public class LaTenTWindow {
         frame.setMinimumSize(new Dimension(700, 700));
         frame.setMaximumSize(new Dimension(981, 981));
 //        frame.setResizable(false);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        frame.pack();
         frame.setVisible(true);
+
         this.initHomeScreen();
         this.initViewScreen();
         this.initEditorScreen();
-        frame.pack();
+
         frame.add(mainPanel);
+
     }
 
     /**
@@ -46,7 +56,7 @@ public class LaTenTWindow {
      * EFFECTS: initializes the menu/home screen and adds it to the window
      */
     private void initHomeScreen() {
-        HomeWindow homeWindow = new HomeWindow();
+        homeWindow = new HomeWindow();
     }
 
     /**
@@ -54,7 +64,7 @@ public class LaTenTWindow {
      * EFFECTS: initializes the viewing screen and adds it to the window
      */
     private void initViewScreen() {
-        EntryViewerWindow entryViewerWindow = new EntryViewerWindow();
+        entryViewerWindow = new EntryViewerWindow();
     }
 
     /**
@@ -62,7 +72,7 @@ public class LaTenTWindow {
      * EFFECTS: initializes the editing screen and adds it to the window
      */
     private void initEditorScreen() {
-        EntryEditorWindow entryEditorWindow = new EntryEditorWindow();
+        entryEditorWindow = new EntryEditorWindow();
     }
 
     /**
@@ -80,9 +90,23 @@ public class LaTenTWindow {
     }
 
     /**
-     * EFFECTS: getter for frame
+     * EFFECTS: getter for main frame
      */
     public static JFrame getFrame() {
         return frame;
+    }
+
+    /**
+     * EFFECTS: getter for static editor window
+     */
+    public static EntryEditorWindow getEntryEditorWindow() {
+        return entryEditorWindow;
+    }
+
+    /**
+     * EFFECTS: getter for static viewer window
+     */
+    public static EntryViewerWindow getEntryViewerWindow() {
+        return entryViewerWindow;
     }
 }
