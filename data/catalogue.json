@@ -18,5 +18,10 @@
         "description": "a whole buynch of blue text",
         "title": "blue text",
         "command": "\\textcolor{blue}{thisismytexttoprint}"
+    },
+    {
+        "description": "some sample text",
+        "title": "Dummy Text",
+        "command": "lorem ipsum"
     }
 ]}

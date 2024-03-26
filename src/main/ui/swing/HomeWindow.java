@@ -1,5 +1,7 @@
 package ui.swing;
 
+import ui.util.Constants;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +39,7 @@ public class HomeWindow extends Window {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setText("LaTenT");
         title.setBackground(Color.black);
-        title.setFont(new Font("Arial", Font.BOLD, 60));
+        title.setFont(Constants.TITLE_FONT);
         this.add(Box.createVerticalGlue());
         this.add(title);
         this.add(startButton);
@@ -49,12 +51,11 @@ public class HomeWindow extends Window {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(
-                image,
-                (981 - mainPanel.getWidth()) / -2,
-                (981 - mainPanel.getHeight()) / -2,
-                this
-        );
+        Image scaledImg = image.getScaledInstance(
+                LaTenTWindow.getFrame().getWidth(),
+                LaTenTWindow.getFrame().getHeight(),
+                Image.SCALE_SMOOTH);
+        g.drawImage(scaledImg,0,0,this);
     }
 
     /**
@@ -63,10 +64,9 @@ public class HomeWindow extends Window {
      */
     private void addBackgroundImage() {
         try {
-            image = ImageIO.read(new File("data/home.jpg"));
+            image = ImageIO.read(new File("data/start.png"));
         } catch (IOException e) {
             System.out.println("ERROR: Background image not found");
         }
-
     }
 }

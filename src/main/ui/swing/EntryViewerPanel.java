@@ -6,6 +6,7 @@ import model.Entry;
 import org.scilab.forge.jlatexmath.ParseException;
 import ui.LaTeXRenderer;
 import ui.LaTenTApp;
+import ui.util.Constants;
 import ui.util.LaTeXImageLabel;
 import ui.util.Viewer;
 
@@ -40,7 +41,7 @@ public class EntryViewerPanel extends JPanel implements Viewer {
     public EntryViewerPanel() {
         super();
         this.setLayout(new GridLayout(1, 2));
-        this.setBackground(Color.YELLOW);
+        this.setBackground(Constants.GOLDENROD);
         title = new JLabel();
         description = new JLabel();
         command = new JLabel();
@@ -55,7 +56,6 @@ public class EntryViewerPanel extends JPanel implements Viewer {
      * EFFECTS: initializes dropdown panel presets
      */
     private void initDropdownPanel() {
-        dropdownPanel.setBackground(Color.ORANGE);
         dropdownPanel.setLayout(new BoxLayout(dropdownPanel, BoxLayout.Y_AXIS));
         dropdownPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
     }
@@ -69,9 +69,9 @@ public class EntryViewerPanel extends JPanel implements Viewer {
         JPanel captionPanel = new JPanel();
         captionPanel.setLayout(new BoxLayout(captionPanel, BoxLayout.Y_AXIS));
         captionPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        title.setFont(new Font("Arial", Font.BOLD, 30));
-        command.setFont(new Font("Arial", Font.PLAIN, 20));
-        description.setFont(new Font("Arial", Font.PLAIN, 20));
+        title.setFont(Constants.HEADER_ONE_BOLD);
+        command.setFont(Constants.HEADER_TWO_PLAIN);
+        description.setFont(Constants.HEADER_TWO_PLAIN);
         captionPanel.add(title);
         captionPanel.add(command);
         captionPanel.add(description);
@@ -102,8 +102,6 @@ public class EntryViewerPanel extends JPanel implements Viewer {
     private void makeNewListEntryPanel() {
         listEntry = new JList(entryListModel);
         listEntry.setVisibleRowCount(4);
-        listEntry.setPreferredSize(new Dimension(300, 300));
-
         listEntryPanel = new JScrollPane(listEntry);
         listEntry.addListSelectionListener(e -> {
             String selectedEntry = (String) listEntry.getSelectedValue();
@@ -116,7 +114,7 @@ public class EntryViewerPanel extends JPanel implements Viewer {
                 label.setIcon(null);
                 label.setText("INVALID COMMAND");
             }
-            label.refreshLabelLatexIcon();
+            label.refreshLabelLatexIcon("data/latex.png");
         });
     }
 
@@ -128,7 +126,8 @@ public class EntryViewerPanel extends JPanel implements Viewer {
     @Override
     public void displayAllEntries() {
         JLabel searchLabel = new JLabel("Search");
-//        searchLabel.setHorizontalAlignment(JLabel.WEST);
+        searchLabel.setFont(Constants.HEADER_TWO_PLAIN);
+        searchLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         dropdownPanel.add(searchLabel);
         dropdownPanel.add(makeSearchbar());
         makeNewListEntryPanel();

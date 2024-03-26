@@ -23,9 +23,9 @@ public class LaTeXImageLabel extends JLabel {
      * MODIFIES: this
      * EFFECTS: refreshes the image icon on the current label
      */
-    public void refreshLabelLatexIcon() {
+    public void refreshLabelLatexIcon(String imagePath) {
         try {
-            BufferedImage img = ImageIO.read(new File("data/latex.png"));
+            BufferedImage img = ImageIO.read(new File(imagePath));
             double scaleFactor = (double) this.getWidth() / img.getWidth();
             Image scaledImg = img.getScaledInstance(
                     this.getWidth(),

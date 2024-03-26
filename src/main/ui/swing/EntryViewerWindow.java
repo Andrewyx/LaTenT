@@ -2,8 +2,10 @@ package ui.swing;
 
 import model.Entry;
 import ui.LaTenTApp;
+import ui.util.Constants;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
@@ -26,10 +28,8 @@ public class EntryViewerWindow extends Window {
      */
     @Override
     protected void initWindow() {
-        BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
         viewerPanel = new EntryViewerPanel();
-        this.setLayout(new BorderLayout(1, 1));
-
+        this.setLayout(new BorderLayout());
         this.add(makeButtonTray(), BorderLayout.NORTH);
         addContentPanels();
         addPanelToMain(this, "VIEW");
@@ -52,7 +52,7 @@ public class EntryViewerWindow extends Window {
         tray.add(deleteButton());
         tray.add(editButton());
         tray.add(startButton);
-
+        tray.setBorder(new LineBorder(Constants.COPPER));
         return tray;
     }
 

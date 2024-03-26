@@ -1,9 +1,15 @@
 package ui.swing;
 
 import ui.LaTeXRenderer;
+import ui.util.Constants;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Instance represents the main LaTenT App GUI instance using java swing.
@@ -20,6 +26,12 @@ public class LaTenTWindow {
      * EFFECTS: Creates new skeleton instance of the LaTenT app GUI instance without loading data
      */
     public LaTenTWindow() {
+        try {
+            new SplashScreenOnBoot();
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            //pass
+        }
         frame = new JFrame();
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -36,12 +48,16 @@ public class LaTenTWindow {
         frame.setPreferredSize(new Dimension(500, 500));
         frame.setMinimumSize(new Dimension(700, 700));
         frame.setMaximumSize(new Dimension(981, 981));
-//        frame.setResizable(false);
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
+        try {
+            BufferedImage img = ImageIO.read(new File("data/home.jpg"));
+            frame.setIconImage(img);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         this.initHomeScreen();
         this.initViewScreen();

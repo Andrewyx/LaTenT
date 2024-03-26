@@ -21,4 +21,7 @@ Features and specific tasks I would like to accomplish as a **user** with this a
 - As a **user**, I want to be able to choose to save my current collection and its commands.
 - As a **user**, I want to be able to choose to load a pre-existing collection of commands. 
 
+## Resources
+Thanks to JLaTeXMath, FuzzyWuzzy, Stable Diffusion for assets and libraries used in this application.
+
 

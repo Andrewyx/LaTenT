@@ -4,17 +4,16 @@ import model.Entry;
 import org.scilab.forge.jlatexmath.ParseException;
 import ui.LaTeXRenderer;
 import ui.LaTenTApp;
+import ui.util.Constants;
 import ui.util.Creator;
 import ui.util.LaTeXImageLabel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Class containing the editor window of the application
@@ -62,6 +61,7 @@ public class EntryEditorWindow extends Window implements Creator {
 
         submissionButton = new JButton("NULL");
         buttonPanel.add(submissionButton, "SWAP");
+        buttonPanel.setBorder(new LineBorder(Constants.COPPER));
         this.add(buttonPanel, BorderLayout.NORTH);
     }
 
@@ -124,11 +124,16 @@ public class EntryEditorWindow extends Window implements Creator {
      */
     private JPanel initValidationPanel() {
         JPanel imagePanel = new JPanel();
-        imagePanel.setBackground(Color.black);
+        imagePanel.setBackground(Constants.PLATINUM);
         imagePanel.setLayout(new GridLayout(2, 1));
         LaTeXImageLabel label = new LaTeXImageLabel();
         JButton renderButton = new JButton("Render");
-
+        renderButton.setFont(Constants.HEADER_ONE_BOLD);
+        JPanel renderPanel = new JPanel();
+        renderPanel.setLayout(new BorderLayout());
+        renderButton.setBackground(Constants.PLATINUM);
+        renderPanel.add(renderButton, BorderLayout.CENTER);
+        renderPanel.setBorder(new EmptyBorder(100, 40, 100, 40));
         renderButton.addActionListener(e -> {
             try {
                 new LaTeXRenderer(enteredCommand.getText());
@@ -136,11 +141,10 @@ public class EntryEditorWindow extends Window implements Creator {
                 label.setIcon(null);
                 label.setText("INVALID COMMAND");
             }
-            label.refreshLabelLatexIcon();
+            label.refreshLabelLatexIcon("data/latex.png");
         });
-
         imagePanel.add(label);
-        imagePanel.add(renderButton);
+        imagePanel.add(renderPanel);
 
         return imagePanel;
     }
@@ -166,25 +170,24 @@ public class EntryEditorWindow extends Window implements Creator {
     private JPanel initUserInputPanel() {
         this.makeTextInputs();
 
-        Color panelColors = new Color(221, 222, 221);
         JPanel userInputPanel = new JPanel();
 
         userInputPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         userInputPanel.setLayout(new BoxLayout(userInputPanel, BoxLayout.Y_AXIS));
-        userInputPanel.setBackground(panelColors);
+        userInputPanel.setBackground(Constants.SILVER);
 
         userInputPanel.add(makeLabelLeftWithText(
                 "Title",
                 enteredTitle,
-                panelColors));
+                Constants.SILVER));
         userInputPanel.add(makeLabelLeftWithText(
                 "Command",
                 enteredCommand,
-                panelColors));
+                Constants.SILVER));
         userInputPanel.add(makeLabelLeftWithText(
                 "Description",
                 enteredDescription,
-                panelColors));
+                Constants.SILVER));
         return userInputPanel;
     }
 
@@ -196,9 +199,11 @@ public class EntryEditorWindow extends Window implements Creator {
         panel.setBackground(color);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JLabel label = new JLabel(text);
+        label.setFont(Constants.DEFAULT_FONT_PLAIN);
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
         textBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel.setBorder(new EmptyBorder(0, 0, 5, 0));
         panel.add(label);
         panel.add(textBox);
         return panel;
