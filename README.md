@@ -21,6 +21,16 @@ Features and specific tasks I would like to accomplish as a **user** with this a
 - As a **user**, I want to be able to choose to save my current collection and its commands.
 - As a **user**, I want to be able to choose to load a pre-existing collection of commands. 
 
+## Instruction for Grader
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by 
+selecting the `New Entry` button to log a new entry through the editor interface.
+
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by
+using the search bar to reorder and find the desired entry in the catalogue.
+- You can locate my visual component on start up and when selecting entries in the view panel.
+- You can save the state of my application by pressing the save button on the view panel.
+- You can reload the state of my application by pressing the load button on the view panel.
+
 ## Resources
 Thanks to JLaTeXMath, FuzzyWuzzy, Stable Diffusion for assets and libraries used in this application.
 
