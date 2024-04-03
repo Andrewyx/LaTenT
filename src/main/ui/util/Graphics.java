@@ -1,7 +1,5 @@
 package ui.util;
 
-import java.util.HashMap;
-
 /**
  * Class containing graphics tools or graphics constants
  */

@@ -31,6 +31,40 @@ using the search bar to reorder and find the desired entry in the catalogue.
 - You can save the state of my application by pressing the save button on the view panel.
 - You can reload the state of my application by pressing the load button on the view panel.
 
+## Logs Samples
+Actions such as adding entries, removing entries, and editing entries.
+```
+Tue Apr 02 19:06:53 PDT 2024
+Added entry to catalogue named Integral
+Tue Apr 02 19:07:02 PDT 2024
+Removed entry from catalogue named Equation K
+Wed Apr 03 10:21:15 PDT 2024
+\omega description went from Greek omega symbol (w) to Greek omega symbol (d)
+Wed Apr 03 10:21:15 PDT 2024
+\omega title went from Omega to Delta
+Wed Apr 03 10:21:15 PDT 2024
+\omega command went from \omega to \delta
+```
+
+## Phase 4: Task 3 - Design Improvements
+While the design of LaTenT already makes use of several design patterns there are many aspects that can be 
+refactored to allow for easier future additions. Particularly, while there does not appear to be significant coupling
+in the UML, this is due to the use of static getters being used across the hierarchy to modify children 
+on the same level of the hierarchy. This should be refactored with a singleton pattern, with prime examples
+of this application being seen in the `EntryEditorWindow`, `EntryViewerWindow`, and `HomeWindow` of the Swing GUI package. For these
+classes, along with the entire instance of the app itself, only one instance should exist, hence singleton 
+should be used here instead. This would allow for the removal of nested static getters for modifying GUI elements
+in separate windows and overall lead to a cleaner design. 
+
+Additionally, there is a case specifically in the Swing `EntryViewerPanel` where this class should
+have its panels be abstracted into separate classes to better adhere to the single responsibility rule. As
+of now, this class demonstrates low cohesion for its highly nested nature, which should thus be refactored. 
+Similar steps 
+
+Overall, refactoring this project with the singleton pattern is the most pertinent next step in terms of 
+improving the code quality of this project. 
+
+
 ## Resources
 Thanks to JLaTeXMath, FuzzyWuzzy, Stable Diffusion for assets and libraries used in this application.
 

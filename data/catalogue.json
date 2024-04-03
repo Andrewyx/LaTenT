@@ -33,5 +33,15 @@
         "description": "Some random math equation",
         "title": "Equation K",
         "command": "k_{(n-3)}(1+r)(1+r)^2=k_n"
+    },
+    {
+        "description": "Sigma notation for some equation to infinity",
+        "title": "Sigma Notation",
+        "command": "\\sum_{i=0}^{\\infty}{\\frac{i}{\\pi}+3i}"
+    },
+    {
+        "description": "Arctan fraction with pi",
+        "title": "Fraction",
+        "command": "\\arctan{\\frac{\\pi}{2\\pi}}"
     }
 ]}

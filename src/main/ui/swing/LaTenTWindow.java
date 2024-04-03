@@ -23,7 +23,6 @@ public class LaTenTWindow {
     private static JPanel mainPanel;
     private static CardLayout cardLayout;
     private static EntryEditorWindow entryEditorWindow;
-    private static HomeWindow homeWindow;
     private static EntryViewerWindow entryViewerWindow;
     private EventLog eventLog = EventLog.getInstance();
 
@@ -84,7 +83,7 @@ public class LaTenTWindow {
      * EFFECTS: initializes the menu/home screen and adds it to the window
      */
     private void initHomeScreen() {
-        homeWindow = new HomeWindow();
+        new HomeWindow();
     }
 
     /**

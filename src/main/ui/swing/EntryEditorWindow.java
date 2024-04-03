@@ -249,17 +249,18 @@ public class EntryEditorWindow extends Window implements Creator {
      * EFFECTS: Updates the entry in the catalogue with new values
      */
     public void updateEntry(Entry newEntry, Entry oldEntry) {
-        LaTenTApp.getCatalogue().removeEntry(oldEntry);
-        LaTenTApp.getCatalogue().addEntry(newEntry);
-    }
-
-    /**
-     * MODIFIES: Catalogue in LaTenTApp
-     * EFFECTS: Deletes the current active entry from the catalogue
-     */
-    public void deleteEntry() {
-        LaTenTApp.getCatalogue().removeEntry(activeEntry);
-        activeEntry = null;
+        if (!oldEntry.getDescription().equals(newEntry.getDescription())) {
+            oldEntry.changeDescription(enteredDescription.getText());
+        }
+        if (!oldEntry.getTitle().equals(newEntry.getTitle())) {
+            oldEntry.changeTitle(enteredTitle.getText());
+        }
+        if (!oldEntry.getCommand().equals(newEntry.getCommand())) {
+            String oldCommand = oldEntry.getCommand();
+            oldEntry.changeCommand(enteredCommand.getText());
+            LaTenTApp.getCatalogue().getCatalogue().remove(oldCommand);
+            LaTenTApp.getCatalogue().getCatalogue().put(newEntry.getCommand(), newEntry);
+        }
     }
 
     /**

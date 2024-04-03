@@ -1,6 +1,8 @@
 package ui;
 
 import model.Catalogue;
+import model.Event;
+import model.EventLog;
 import persistence.JsonRead;
 import persistence.JsonWrite;
 import ui.console.EntryCreator;
@@ -11,6 +13,7 @@ import ui.util.Constants;
 import ui.util.Graphics;
 import ui.util.Widget;
 
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -24,8 +27,6 @@ public class LaTenTApp {
     private static Catalogue catalogue = new Catalogue();
     private boolean appState;
     private String userInputString;
-    private Widget activeWidget;
-    private LaTenTWindow appWindow;
 
     /**
      * EFFECTS: Starts new instance of the app and runs it, with a new catalogue
@@ -43,7 +44,7 @@ public class LaTenTApp {
      * EFFECTS: starts main app window
      */
     private void initWindow() {
-        this.appWindow = new LaTenTWindow();
+        new LaTenTWindow();
     }
 
     /**
@@ -60,6 +61,10 @@ public class LaTenTApp {
             System.out.println("Running: " + this.userInputString);
             this.handleInput(userInputString);
         }
+        for (Event next : EventLog.getInstance()) {
+            System.out.println(next.toString());
+        }
+        LaTenTWindow.getFrame().dispatchEvent(new WindowEvent(LaTenTWindow.getFrame(), WindowEvent.WINDOW_CLOSING));
     }
 
     /**
@@ -137,14 +142,14 @@ public class LaTenTApp {
      */
     private void newEntry() {
         System.out.println("Opening Entry Creator");
-        this.activeWidget = new EntryCreator();
+        new EntryCreator();
     }
 
     /**
      * EFFECTS: Displays a specific command info from the catalogue through the find menu
      */
     private void findEntry() {
-        this.activeWidget = new EntryViewer(catalogue);
+        new EntryViewer(catalogue);
     }
 
     /**
@@ -156,9 +161,7 @@ public class LaTenTApp {
         System.out.println("Give Entry Command to Open");
         userInputString = USER_INPUT.next();
         if (catalogue.hasEntry(userInputString)) {
-            this.activeWidget = new EntryEditor(
-                    catalogue.getCatalogueEntry(userInputString)
-            );
+            new EntryEditor(catalogue.getCatalogueEntry(userInputString));
         } else {
             System.out.println("Entry not found");
         }
@@ -169,7 +172,7 @@ public class LaTenTApp {
      */
     private void showAllEntries() {
         System.out.println("Showing all entries: ");
-        this.activeWidget = new EntryViewer();
+        new EntryViewer();
     }
 
     /**
