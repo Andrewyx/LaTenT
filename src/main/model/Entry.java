@@ -8,6 +8,7 @@ public class Entry implements MutationTools {
     private String description;
     private String command;
     private String title;
+    private EventLog eventLog = EventLog.getInstance();
 
     /**
      * EFFECTS: Creates new entry with name, title, and LaTex command
@@ -25,6 +26,8 @@ public class Entry implements MutationTools {
      */
     @Override
     public void changeDescription(String description) {
+        this.eventLog.logEvent(new Event(this.command + " description went from "
+                + this.description + " to " + description));
         this.description = description;
     }
 
@@ -35,6 +38,8 @@ public class Entry implements MutationTools {
      */
     @Override
     public void changeCommand(String command) {
+        this.eventLog.logEvent(new Event(this.command + " command went from "
+                + this.command + " to " + command));
         this.command = command;
     }
 
@@ -45,6 +50,8 @@ public class Entry implements MutationTools {
      */
     @Override
     public void changeTitle(String title) {
+        this.eventLog.logEvent(new Event(this.command + " title went from "
+                + this.title + " to " + title));
         this.title = title;
     }
 

@@ -1,5 +1,7 @@
 package ui.swing;
 
+import model.Event;
+import model.EventLog;
 import ui.LaTeXRenderer;
 import ui.util.Constants;
 
@@ -7,6 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +25,7 @@ public class LaTenTWindow {
     private static EntryEditorWindow entryEditorWindow;
     private static HomeWindow homeWindow;
     private static EntryViewerWindow entryViewerWindow;
+    private EventLog eventLog = EventLog.getInstance();
 
     /**
      * EFFECTS: Creates new skeleton instance of the LaTenT app GUI instance without loading data
@@ -36,6 +41,13 @@ public class LaTenTWindow {
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         new LaTeXRenderer("null");
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                for (Event next : eventLog) {
+                    System.out.println(next.toString());
+                }
+            }
+        });
         this.initAppWindow();
     }
 

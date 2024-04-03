@@ -9,6 +9,7 @@ import java.util.Map;
 public class Catalogue {
 
     private Map<String, Entry> catalogue;
+    private EventLog eventLog = EventLog.getInstance();
 
     /**
      * EFFECTS: Creates new catalogue with no entries yet
@@ -24,6 +25,7 @@ public class Catalogue {
      */
     public void addEntry(Entry entry) {
         this.catalogue.put(entry.getCommand(), entry);
+        eventLog.logEvent(new Event("Added entry to catalogue named " + entry.getTitle()));
     }
 
     /**
@@ -32,6 +34,8 @@ public class Catalogue {
      * EFFECTS: Removes entry from catalogue given its key
      */
     public void removeEntry(String key) {
+        eventLog.logEvent(new Event("Removed entry from catalogue named "
+                + this.catalogue.get(key).getTitle()));
         this.catalogue.remove(key);
     }
 
@@ -41,6 +45,8 @@ public class Catalogue {
      * EFFECTS: Removes entry from catalogue given an entry
      */
     public void removeEntry(Entry entry) {
+        eventLog.logEvent(new Event("Removed entry from catalogue named "
+                + entry.getTitle()));
         this.catalogue.remove(entry.getCommand());
     }
 

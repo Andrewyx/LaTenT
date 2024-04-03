@@ -20,8 +20,18 @@
         "command": "\\textcolor{blue}{thisismytexttoprint}"
     },
     {
+        "description": "Greek omega symbol (w)",
+        "title": "Omega",
+        "command": "\\omega"
+    },
+    {
         "description": "some sample text",
         "title": "Dummy Text",
         "command": "lorem ipsum"
+    },
+    {
+        "description": "Some random math equation",
+        "title": "Equation K",
+        "command": "k_{(n-3)}(1+r)(1+r)^2=k_n"
     }
 ]}
